@@ -14,6 +14,10 @@ const UserSchema = new Schema({
         type: String,
         required: true,
     },
+    cashBalance: {
+        type: Number,
+        required: true,
+    },
     // friends will be an array of friend models
     friends: [{
         _id: {

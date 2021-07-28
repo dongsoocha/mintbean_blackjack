@@ -19,5 +19,5 @@ module.exports = function validateLoginInput(data){
         errors.password = 'Password field is required';
     }
 
-    return {errors, isvalid: Object.keys(errors).length === 0}
+    return {errors, isValid: Object.keys(errors).length === 0}
 };

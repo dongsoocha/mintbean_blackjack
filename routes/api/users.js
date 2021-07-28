@@ -53,6 +53,7 @@ router.post("/register", (req, res) => {
         username: req.body.username,
         email: req.body.email,
         password: req.body.password,
+        cashBalance: 500,
       });
 
       bcrypt.genSalt(10, (err, salt) => {
