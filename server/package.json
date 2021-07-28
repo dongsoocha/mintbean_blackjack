@@ -1,23 +1,33 @@
 {
-  "name": "server",
-  "version": "0.0.0",
-  "private": true,
+  "name": "mintbean_poker",
+  "version": "1.0.0",
+  "description": "MintBean hiring hackathon, 7/27/21-8/3/21",
+  "main": "app.js",
   "scripts": {
-    "dev": "nodemon ./bin/www",
-    "debug": "nodemon  --inspect ./bin/www",
-    "test": "NODE_ENV=test ./node_modules/.bin/mocha --exit --timeout 30000"
+    "start": "node app.js",
+    "server": "nodemon app.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/dongsoocha/mintbean_poker.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/dongsoocha/mintbean_poker/issues"
+  },
+  "homepage": "https://github.com/dongsoocha/mintbean_poker#readme",
+  "devDependencies": {
+    "nodemon": "^2.0.12"
   },
   "dependencies": {
-    "cookie-parser": "^1.4.5",
-    "dotenv": "^8.2.0",
+    "bcryptjs": "^2.4.3",
+    "body-parser": "^1.19.0",
     "express": "^4.17.1",
-    "http-errors": "~1.8.0",
-    "morgan": "^1.10.0",
-    "nodemon": "^2.0.6"
-  },
-  "devDependencies": {
-    "chai": "^4.2.0",
-    "chai-http": "^4.3.0",
-    "mocha": "^8.2.1"
+    "jsonwebtoken": "^8.5.1",
+    "mongoose": "^5.13.3",
+    "passport": "^0.4.1",
+    "passport-jwt": "^4.0.0",
+    "validator": "^13.6.0"
   }
 }
