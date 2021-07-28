@@ -13,7 +13,14 @@ const UserSchema = new Schema({
     password: {
         type: String,
         required: true,
-    }
+    },
+    // friends will be an array of friend models
+    friends: [{
+        _id: {
+            type: String,
+            required: true,
+        },
+    }]
 }, {
     timestamps: true,
 })
