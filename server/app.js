@@ -4,15 +4,15 @@ const app = express();
 const db = require('./config/keys').mongoURI;
 const users = require('./routes/api/users');
 const passport = require('passport');
+const cors = require("cors");
 
-
-
-mongoose   
-    .connect(db, {useNewUrlParser: true})
+mongoose
+    .connect(db, { useNewUrlParser: true })
     .then(() => console.log("Connected to MongoDB successfully"))
     .catch(err => console.log(err));
 
 app.use(express.urlencoded({ extended: false }));
+app.use(cors());
 app.use(express.json());
 
 app.use(passport.initialize());

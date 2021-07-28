@@ -14,31 +14,32 @@ router.get(
   "/current",
   passport.authenticate("jwt", { session: false }),
   (req, res) => {
-    res.json({ 
-        id: req.user.id,
-        username: req.user.username,
-        email: req.user.email
-     });
+    res.json({
+      id: req.user.id,
+      username: req.user.username,
+      email: req.user.email
+    });
   }
 );
 
 router.post("/register", (req, res) => {
-    const { errors, isValid } = validateRegisterInput(req.body);
+  const { errors, isValid } = validateRegisterInput(req.body);
 
-    if (!isValid) {
-        return res.status(400).json(errors);
-    }
+  if (!isValid) {
+    return res.status(400).json(errors);
+  }
 
   // Check to make sure nobody has already registered with a duplicate email
-  User.findOne({ username: req.body.username}).then(username => {
+  User.findOne({ username: req.body.username })
+    .then(username => {
       if (username) {
-          return res
-            .status(400)
-            .json({
-                username: "Username already taken."
-            })
+        return res
+          .status(400)
+          .json({
+            username: "Username already taken."
+          })
       }
-  })
+    })
   User.findOne({ email: req.body.email }).then((user) => {
     if (user) {
       // Throw a 400 error if the email address already exists
@@ -63,14 +64,14 @@ router.post("/register", (req, res) => {
           newUser
             .save()
             .then((user) => {
-                const payload = {id: user.id, username: user.username, email: user.email};
+              const payload = { id: user.id, username: user.username, email: user.email };
 
-                jwt.sign(payload, keys.secretOrKey, {expiresIn: 3600}, (err, token) => {
-                    res.json({
-                        success: true,
-                        token: "Bearer " + token
-                    })
+              jwt.sign(payload, keys.secretOrKey, { expiresIn: 3600 }, (err, token) => {
+                res.json({
+                  success: true,
+                  token: "Bearer " + token
                 })
+              })
             })
             .catch((err) => console.log(err));
         });
@@ -83,7 +84,7 @@ router.post("/login", (req, res) => {
   const { errors, isValid } = validateLoginInput(req.body);
 
   if (!isValid) {
-      return res.status(400).json(errors);
+    return res.status(400).json(errors);
   }
 
   const email = req.body.email;
@@ -95,18 +96,18 @@ router.post("/login", (req, res) => {
     }
     bcrypt.compare(password, user.password).then((isMatch) => {
       if (isMatch) {
-        const payload = {id: user.id, username: user.username, email: user.email};
+        const payload = { id: user.id, username: user.username, email: user.email };
 
         jwt.sign(
-            payload,
-            keys.secretOrKey,
-            {expiresIn: 3600},
-            (err, token) => {
-                res.json({
-                    success:  true,
-                    token: 'Bearer ' + token
-                });
-            }
+          payload,
+          keys.secretOrKey,
+          { expiresIn: 3600 },
+          (err, token) => {
+            res.json({
+              success: true,
+              token: 'Bearer ' + token
+            });
+          }
         );
       } else {
         return res.status(400).json({ password: "Incorrect password" });
