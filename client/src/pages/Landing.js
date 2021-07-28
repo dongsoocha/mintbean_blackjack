@@ -1,11 +1,16 @@
 import React, { useState } from "react";
 
 import { Typography, makeStyles, Divider, Button } from "@material-ui/core";
+import Fade from '@material-ui/core/Fade';
+import Paper from '@material-ui/core/Paper';
 import { Route, Link } from "react-router-dom";
+import LandingDefault from "../components/LandingDefault";
+import Login from "../components/Login";
+import Register from "../components/Register";
 
 const useStyles = makeStyles((theme) => ({
   outer: {
-    height: '100vh',
+    minHeight: '100vh',
     display: 'flex',
     backgroundImage: `url(${"https://res.cloudinary.com/dqhd5slcy/image/upload/v1627415371/background_dijj6c.png"})`,
     backgroundSize: 'cover'
@@ -17,11 +22,12 @@ const useStyles = makeStyles((theme) => ({
     margin: 'auto auto auto auto',
     boxShadow:
       '0 0 0 1px rgba(0, 0, 0, 0.1), 0 2px 4px 1px rgba(0, 0, 0, 0.18)',
-    border: '2px solid #9e9e9e',
+    border: '2px solid #ffc400',
     borderRadius: '10px',
     textAlign: 'center',
     backgroundColor: '#212121',
     minHeight: '80vh',
+    maxHeight: '90%',
     [theme.breakpoints.down('md')]: {
       width: '50%',
     },
@@ -30,11 +36,11 @@ const useStyles = makeStyles((theme) => ({
     },
   },
   white: {
-    color: 'white'
+    color: '#ffc400'
   },
   divider: {
     width: '50%',
-    borderTop: '1px solid white',
+    borderTop: '1px solid #ffc400',
     marginTop: '30px',
     marginBottom: '30px',
     marginLeft: '25%'
@@ -48,12 +54,25 @@ const useStyles = makeStyles((theme) => ({
   m30: {
     marginTop: '20px',
     marginBottom: '20px'
+  },
+  button: {
+    backgroundColor: '#ffc400',
+    color: '#212121',
+    '&:hover': {
+      backgroundColor: '#b28900'
+    }
   }
 }))
 
 const LandingPage = () => {
   const classes = useStyles();
   const [page, setPage] = useState("default")
+  const [pageDefault, setPageDefault] = useState(true)
+  const [checked, setChecked] = useState(true);
+
+  const test1 = () => {
+    setChecked((prev) => !prev)
+  }
 
   return (
     <div className={classes.outer}>
@@ -62,12 +81,9 @@ const LandingPage = () => {
           <Typography variant="h2" className={classes.white}>MintJack</Typography>
           <Typography variant="body2" className={classes.white}>An online multiplayer web app</Typography>
           <Divider className={classes.divider} />
-          <Typography variant="h4" className={classes.white + " " + classes.m30}>Have an account?</Typography>
-          <Button variant="contained" className={classes.landingButton}>Log In</Button>
-          <Typography variant="h4" className={classes.white + " " + classes.m30}>Need an account?</Typography>
-          <Button variant="contained" className={classes.landingButton}>Register</Button>
-          <Divider className={classes.divider} />
-          <Typography variant="body2" className={classes.white}>Don't want to register? Continute as guest.</Typography>
+          <LandingDefault checked={page === "default"} setPage={setPage} />
+          <Login checked={page === "login"} setPage={setPage} />
+          <Register checked={page === "register"} setPage={setPage} />
         </div>
       </div>
     </div>
