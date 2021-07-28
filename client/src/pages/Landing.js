@@ -1,9 +1,6 @@
 import React, { useState } from "react";
 
-import { Typography, makeStyles, Divider, Button } from "@material-ui/core";
-import Fade from '@material-ui/core/Fade';
-import Paper from '@material-ui/core/Paper';
-import { Route, Link } from "react-router-dom";
+import { Typography, makeStyles, Divider } from "@material-ui/core";
 import LandingDefault from "../components/LandingDefault";
 import Login from "../components/Login";
 import Register from "../components/Register";
@@ -19,6 +16,7 @@ const useStyles = makeStyles((theme) => ({
     position: 'relative',
     display: 'flex',
     width: '30%',
+    padding: '20px',
     margin: 'auto auto auto auto',
     boxShadow:
       '0 0 0 1px rgba(0, 0, 0, 0.1), 0 2px 4px 1px rgba(0, 0, 0, 0.18)',
@@ -67,12 +65,6 @@ const useStyles = makeStyles((theme) => ({
 const LandingPage = () => {
   const classes = useStyles();
   const [page, setPage] = useState("default")
-  const [pageDefault, setPageDefault] = useState(true)
-  const [checked, setChecked] = useState(true);
-
-  const test1 = () => {
-    setChecked((prev) => !prev)
-  }
 
   return (
     <div className={classes.outer}>
