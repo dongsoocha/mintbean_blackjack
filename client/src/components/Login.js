@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { Typography, makeStyles, Divider, Button, TextField, Box } from "@material-ui/core";
 import Fade from '@material-ui/core/Fade';
+import axios from "axios";
 
 const initialLogInData = {
     signInEmail: "",
@@ -58,21 +59,48 @@ const useStyles = makeStyles((theme) => ({
             cursor: 'pointer',
             textDecoration: 'underline',
         }
+    },
+    red: {
+        color: '#ff1744'
+    },
+    green: {
+        color: '#4caf50'
     }
 }))
 
 const Login = (props) => {
     const [logInData, setLogInData] = useState(initialLogInData);
+    const [responseMsg, setResponseMsg] = useState({
+        type: '',
+        message: '',
+    })
     const classes = useStyles();
 
 
     const handleChange = (event) => {
+        setResponseMsg({ type: '', message: '' })
         const { value, name } = event.target;
         setLogInData((prevState) => ({ ...prevState, [name]: value }));
     };
 
-    const handleSubmit = () => {
-
+    const handleSubmit = (e) => {
+        e.preventDefault()
+        if (logInData.signInEmail && logInData.signInPassword) {
+            axios
+                .post('http://localhost:5000/api/users/login', {
+                    email: logInData.signInEmail,
+                    password: logInData.signInPassword,
+                })
+                .then((res) => {
+                    setLogInData(initialLogInData)
+                    setResponseMsg({ type: 'success', message: 'Log in successful!' })
+                })
+                .catch((err) => {
+                    err.response.data.email ? setResponseMsg({ type: 'error', message: 'This user does not exist!' }) : setResponseMsg({ type: 'error', message: 'Incorrect password!' })
+                })
+        } else {
+            console.error("Please fill in all fields.");
+        }
     }
 
     return (
@@ -119,6 +147,9 @@ const Login = (props) => {
                             }}
                         />
                     </Box>
+                    {responseMsg.message && <Typography variant="body2" className={responseMsg.type === "error" ? classes.red : classes.green}>
+                        {responseMsg.message}
+                    </Typography>}
                     <Box m={3}>
                         <Button variant="contained" type="submit" className={classes.button}>Login</Button>
                     </Box>
