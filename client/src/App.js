@@ -8,18 +8,21 @@ import Test from "./pages/Test";
 
 import { UserProvider } from "./contextProvider/user";
 
+import { SocketContext, socket } from './ContextProvider/socket';
+
 import "./App.css";
 
 function App() {
   return (
     <MuiThemeProvider theme={theme}>
       <UserProvider>
-        <BrowserRouter>
-          <Route path="/" exact component={LandingPage} />
-          <Route path="/test" component={Test} />
-        </BrowserRouter>
+        <SocketContext.Provider value={socket}>
+          <BrowserRouter>
+            <Route path="/" component={LandingPage} />
+          </BrowserRouter>
+        </SocketContext.Provider>
       </UserProvider>
-    </MuiThemeProvider>
+    </MuiThemeProvider >
   );
 }
 
