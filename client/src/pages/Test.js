@@ -70,10 +70,10 @@ const Test = () => {
         <div className={classes.outer}>
             <div className={classes.container}>
                 <div className={classes.inner}>
-                    <Button className={classes.button} variant="contained" onClick={() => setUserState("username1")}>
+                    <Button className={classes.button} variant="contained" onClick={() => setUserState((prev) => ({ ...prev, email: "test 1", message: "change email to test 1" }))}>
                         Test 1
                     </Button>
-                    <Button className={classes.button} variant="contained" onClick={() => setUserState("test2")}>
+                    <Button className={classes.button} variant="contained" onClick={() => setUserState((prev) => ({ ...prev, username: "test 2", message: "change username to test 2" }))}>
                         Test 2
                     </Button>
                     <Button className={classes.button} variant="contained" onClick={() => console.log(userState)}>
