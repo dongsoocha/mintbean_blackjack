@@ -12,13 +12,16 @@ import { SocketContext, socket } from './contextProvider/socket';
 
 import "./App.css";
 
+// TODO: Extract the background css out of individual pages to the app-wide styling
+
 function App() {
   return (
     <MuiThemeProvider theme={theme}>
       <UserProvider>
         <SocketContext.Provider value={socket}>
           <BrowserRouter>
-            <Route path="/" component={LandingPage} />
+            <Route path="/" exact component={LandingPage} />
+            <Route path="/test" component={Test} />
           </BrowserRouter>
         </SocketContext.Provider>
       </UserProvider>
