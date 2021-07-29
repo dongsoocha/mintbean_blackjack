@@ -20,7 +20,8 @@ function App() {
       <UserProvider>
         <SocketContext.Provider value={socket}>
           <BrowserRouter>
-            <Route path="/" component={LandingPage} />
+            <Route path="/" exact component={LandingPage} />
+            <Route path="/test" component={Test} />
           </BrowserRouter>
         </SocketContext.Provider>
       </UserProvider>
