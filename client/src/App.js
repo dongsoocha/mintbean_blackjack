@@ -4,15 +4,21 @@ import { BrowserRouter, Route } from "react-router-dom";
 
 import { theme } from "./themes/theme";
 import LandingPage from "./pages/Landing";
+import Test from "./pages/Test";
+
+import { UserProvider } from "./contextProvider/user";
 
 import "./App.css";
 
 function App() {
   return (
     <MuiThemeProvider theme={theme}>
-      <BrowserRouter>
-        <Route path="/" component={LandingPage} />
-      </BrowserRouter>
+      <UserProvider>
+        <BrowserRouter>
+          <Route path="/" exact component={LandingPage} />
+          <Route path="/test" component={Test} />
+        </BrowserRouter>
+      </UserProvider>
     </MuiThemeProvider>
   );
 }
