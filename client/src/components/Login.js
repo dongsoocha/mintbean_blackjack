@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { useHistory } from "react-router-dom";
 import { Typography, makeStyles, Divider, Button, TextField, Box } from "@material-ui/core";
 import Fade from '@material-ui/core/Fade';
 import axios from "axios";
@@ -75,7 +76,7 @@ const Login = (props) => {
         message: '',
     })
     const classes = useStyles();
-
+    const history = useHistory();
 
     const handleChange = (event) => {
         setResponseMsg({ type: '', message: '' })
@@ -94,6 +95,7 @@ const Login = (props) => {
                 .then((res) => {
                     setLogInData(initialLogInData)
                     setResponseMsg({ type: 'success', message: 'Log in successful!' })
+                    console.log(res)
                 })
                 .catch((err) => {
                     err.response.data.email ? setResponseMsg({ type: 'error', message: 'This user does not exist!' }) : setResponseMsg({ type: 'error', message: 'Incorrect password!' })

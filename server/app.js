@@ -5,6 +5,7 @@ const db = require('./config/keys').mongoURI;
 const users = require('./routes/api/users');
 const passport = require('passport');
 const cors = require("cors");
+const cookieParser = require('cookie-parser');
 
 mongoose
     .connect(db, { useNewUrlParser: true })
@@ -13,6 +14,7 @@ mongoose
 
 app.use(express.urlencoded({ extended: false }));
 app.use(cors());
+app.use(cookieParser());
 app.use(express.json());
 
 app.use(passport.initialize());
