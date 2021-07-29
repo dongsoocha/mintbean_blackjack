@@ -5,14 +5,18 @@ import { BrowserRouter, Route } from "react-router-dom";
 import { theme } from "./themes/theme";
 import LandingPage from "./pages/Landing";
 
+import { SocketContext, socket } from './ContextProvider/socket';
+
 import "./App.css";
 
 function App() {
   return (
     <MuiThemeProvider theme={theme}>
-      <BrowserRouter>
-        <Route path="/" component={LandingPage} />
-      </BrowserRouter>
+      <SocketContext.Provider value={socket}>
+        <BrowserRouter>
+          <Route path="/" component={LandingPage} />
+        </BrowserRouter>
+      </SocketContext.Provider>
     </MuiThemeProvider>
   );
 }
