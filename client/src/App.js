@@ -12,6 +12,8 @@ import { SocketContext, socket } from './ContextProvider/socket';
 
 import "./App.css";
 
+// TODO: Extract the background css out of individual pages to the app-wide styling
+
 function App() {
   return (
     <MuiThemeProvider theme={theme}>
