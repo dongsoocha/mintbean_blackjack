@@ -95,7 +95,7 @@ const Login = (props) => {
                 .then((res) => {
                     setLogInData(initialLogInData)
                     setResponseMsg({ type: 'success', message: 'Log in successful!' })
-                    console.log(res)
+                    history.push("/test")
                 })
                 .catch((err) => {
                     err.response.data.email ? setResponseMsg({ type: 'error', message: 'This user does not exist!' }) : setResponseMsg({ type: 'error', message: 'Incorrect password!' })
