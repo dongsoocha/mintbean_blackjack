@@ -103,7 +103,7 @@ class Game {
         if (score > 21 && ace) {
             score -= 10;
         }
-        
+
         console.log(this.playerCards[player], score);
     };
 }
@@ -111,4 +111,3 @@ class Game {
 let game = new Game(3);
 game.startGame();
 game.calcScore(1);
-
