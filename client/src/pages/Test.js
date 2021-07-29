@@ -1,6 +1,5 @@
-import React, { useContext } from 'react';
-import { UserContext } from '../contextProvider/user';
-import { Typography, makeStyles, Divider, Button, TextField, Box } from "@material-ui/core";
+import React from 'react';
+import { makeStyles, Button } from "@material-ui/core";
 import { useUserContex, useUserUpdateContex } from '../contextProvider/user';
 
 const useStyles = makeStyles((theme) => ({
@@ -61,7 +60,6 @@ const useStyles = makeStyles((theme) => ({
 }))
 
 const Test = () => {
-    //const { userState, setUserState } = useContext(UserContext);
     const userState = useUserContex();
     const setUserState = useUserUpdateContex();
     const classes = useStyles();
