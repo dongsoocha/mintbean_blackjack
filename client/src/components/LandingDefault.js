@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import { Typography, makeStyles, Divider, Button } from "@material-ui/core";
 import Fade from '@material-ui/core/Fade';
+import { Link } from "react-router-dom";
 
 const useStyles = makeStyles((theme) => ({
     white: {
@@ -50,9 +51,8 @@ const LandingDefault = (props) => {
                 <Typography variant="h4" className={classes.white + " " + classes.m20}>Need an account?</Typography>
                 <Button variant="contained" className={classes.landingButton} onClick={() => props.setPage("register")}>Register</Button>
                 <Divider className={classes.divider} />
-                <Typography varaint="body2" className={classes.white}>
-                    Don't want to register? <strong className={classes.goldSpan} onClick={() => props.setPage("default")}>Continue as guest.</strong>
-                </Typography>
+                <Typography variant="h4" className={classes.white + " " + classes.m20}>Don't want to register?</Typography>
+                <Button variant="contained" className={classes.landingButton} onClick={() => props.setPage("register")}><Link to="/Game">Continue as guest.</Link></Button>
             </div>
         </Fade>
     );

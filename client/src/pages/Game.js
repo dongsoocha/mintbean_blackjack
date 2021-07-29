@@ -31,7 +31,7 @@ const useStyles = makeStyles((theme) => ({
     color: '#ffc400'
   },
   red: {
-    color: '#ff3300'
+    color: '#ff0000'
   },
   dealer: {
     width: '50%',

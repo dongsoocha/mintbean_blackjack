@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { Typography, makeStyles, Divider, Button, TextField, Box } from "@material-ui/core";
 import Fade from '@material-ui/core/Fade';
 import axios from "axios";
+import { Link } from "react-router-dom";
 
 const initialRegisterData = {
     registerUsername: "",
@@ -258,7 +259,7 @@ const Register = (props) => {
                         Already have an account? <strong className={classes.signUp} onClick={() => props.setPage("login")}>Sign in!</strong>
                     </Typography>
                     <Typography varaint="body2" className={classes.white}>
-                        Don't want to register? <strong className={classes.signUp} onClick={() => props.setPage("default")}>Continue as guest.</strong>
+                        Don't want to register? <strong className={classes.signUp} onClick={() => props.setPage("default")}><Link to="/Game">Continue as guest.</Link></strong>
                     </Typography>
                 </form>
             </div>
