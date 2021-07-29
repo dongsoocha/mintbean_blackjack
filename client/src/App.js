@@ -8,7 +8,7 @@ import Test from "./pages/Test";
 
 import { UserProvider } from "./contextProvider/user";
 
-import { SocketContext, socket } from './ContextProvider/socket';
+import { SocketContext, socket } from './contextProvider/socket';
 
 import "./App.css";
 
