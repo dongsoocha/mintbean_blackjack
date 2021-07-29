@@ -2,7 +2,14 @@ const mongoose = require("mongoose");
 const Schema = mongoose.Schema;
 
 const RoomSchema = new Schema({
-  players: new Array(7).fill(null),
+  players: [
+    {
+      _id: {
+        type: String,
+        required: true,
+      },
+    },
+  ],
 }, {
     timestamps: true,
 });
