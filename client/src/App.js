@@ -4,6 +4,9 @@ import { BrowserRouter, Route } from "react-router-dom";
 
 import { theme } from "./themes/theme";
 import LandingPage from "./pages/Landing";
+import Test from "./pages/Test";
+
+import { UserProvider } from "./contextProvider/user";
 
 import { SocketContext, socket } from './ContextProvider/socket';
 
@@ -12,12 +15,14 @@ import "./App.css";
 function App() {
   return (
     <MuiThemeProvider theme={theme}>
-      <SocketContext.Provider value={socket}>
-        <BrowserRouter>
-          <Route path="/" component={LandingPage} />
-        </BrowserRouter>
-      </SocketContext.Provider>
-    </MuiThemeProvider>
+      <UserProvider>
+        <SocketContext.Provider value={socket}>
+          <BrowserRouter>
+            <Route path="/" component={LandingPage} />
+          </BrowserRouter>
+        </SocketContext.Provider>
+      </UserProvider>
+    </MuiThemeProvider >
   );
 }
 
