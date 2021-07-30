@@ -50,10 +50,35 @@ const useStyles = makeStyles((theme) => ({
     },
     button: {
         width: '150px',
+    },
+    buttonGold: {
         backgroundColor: '#ffc400',
         color: '#212121',
         '&:hover': {
             backgroundColor: '#b28900'
+        }
+    },
+    buttonLogout: {
+        backgroundColor: '#f44336',
+        color: '#212121',
+        '&:hover': {
+            backgroundColor: '#aa2e25'
+        }
+    },
+    buttonWhite: {
+        backgroundColor: '#e0e0e0',
+        color: '#212121',
+        '&:hover': {
+            backgroundColor: '#9e9e9e'
+        }
+    },
+    buttonL: {
+        width: '250px',
+        height: '60px',
+        backgroundColor: '#4caf50',
+        color: '#212121',
+        '&:hover': {
+            backgroundColor: '#357a38'
         }
     },
     shiftDown: {
@@ -97,16 +122,16 @@ const Home = () => {
                 <Typography variant="h6" className={classes.gold}>Your Balance: <MonetizationOnIcon className={classes.shiftDown} />{userState.balance}</Typography>
                 <Divider className={classes.divider} />
                 <Box component="div" display="block" m={3}>
-                    <Button variant="contained" className={classes.button} onClick={joinRoom}>Join Room</Button>
+                    <Button variant="contained" className={classes.buttonL} onClick={joinRoom}>Enter Game Room</Button>
                 </Box>
                 <Box component="div" display="block" m={3}>
-                    <Button variant="contained" className={classes.button} onClick={() => console.log(avatarMap[userState.avatar])}>How To Play</Button>
+                    <Button variant="contained" className={classes.button + " " + classes.buttonWhite} onClick={() => console.log(avatarMap[userState.avatar])}>How To Play</Button>
                 </Box>
                 <Box component="div" display="block" m={3}>
-                    <Button variant="contained" className={classes.button} onClick={() => console.log(userState)}>Store</Button>
+                    <Button variant="contained" className={classes.button + " " + classes.buttonGold} onClick={() => console.log(userState)}>Store</Button>
                 </Box>
                 <Box component="div" display="block" m={3}>
-                    <Button variant="contained" className={classes.button}>Logout</Button>
+                    <Button variant="contained" className={classes.buttonLogout + " " + classes.button}>Logout</Button>
                 </Box>
 
             </div>
