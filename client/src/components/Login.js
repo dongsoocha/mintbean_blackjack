@@ -3,6 +3,7 @@ import { useHistory } from "react-router-dom";
 import { Typography, makeStyles, Divider, Button, TextField, Box } from "@material-ui/core";
 import Fade from '@material-ui/core/Fade';
 import axios from "axios";
+import { useUserContext, useUserUpdateContext } from '../contextProvider/user';
 
 const initialLogInData = {
     signInEmail: "",
@@ -10,7 +11,7 @@ const initialLogInData = {
 };
 
 const useStyles = makeStyles((theme) => ({
-    white: {
+    gold: {
         color: '#ffc400'
     },
     m20: {
@@ -77,6 +78,8 @@ const Login = (props) => {
     })
     const classes = useStyles();
     const history = useHistory();
+    const userState = useUserContext();
+    const setUserState = useUserUpdateContext();
 
     const handleChange = (event) => {
         setResponseMsg({ type: '', message: '' })
@@ -95,7 +98,10 @@ const Login = (props) => {
                 .then((res) => {
                     setLogInData(initialLogInData)
                     setResponseMsg({ type: 'success', message: 'Log in successful!' })
-                    history.push("/test")
+                    setUserState({ ...res.data.payload, isAuth: true, currentMatchId: '' })
+                    setTimeout(() => {
+                        history.push("/home")
+                    }, 1000)
                 })
                 .catch((err) => {
                     err.response.data.email ? setResponseMsg({ type: 'error', message: 'This user does not exist!' }) : setResponseMsg({ type: 'error', message: 'Incorrect password!' })
@@ -122,10 +128,10 @@ const Login = (props) => {
                             type="email"
                             onChange={handleChange}
                             InputProps={{
-                                className: classes.white,
+                                className: classes.gold,
                             }}
                             InputLabelProps={{
-                                className: classes.white,
+                                className: classes.gold,
                             }}
                         />
                     </Box>
@@ -142,10 +148,10 @@ const Login = (props) => {
                             type="password"
                             onChange={handleChange}
                             InputProps={{
-                                className: classes.white,
+                                className: classes.gold,
                             }}
                             InputLabelProps={{
-                                className: classes.white,
+                                className: classes.gold,
                             }}
                         />
                     </Box>
@@ -156,7 +162,7 @@ const Login = (props) => {
                         <Button variant="contained" type="submit" className={classes.button}>Login</Button>
                     </Box>
                     <Divider className={classes.divider} />
-                    <Typography varaint="body2" className={classes.white}>
+                    <Typography varaint="body2" className={classes.gold}>
                         Don't have an account? <strong className={classes.signUp} onClick={() => props.setPage("register")}>Sign up!</strong>
                     </Typography>
                 </form>
