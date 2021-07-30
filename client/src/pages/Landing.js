@@ -6,18 +6,12 @@ import Login from "../components/Login";
 import Register from "../components/Register";
 
 const useStyles = makeStyles((theme) => ({
-  outer: {
-    minHeight: '100vh',
-    display: 'flex',
-    backgroundImage: `url(${"https://res.cloudinary.com/dqhd5slcy/image/upload/v1627415371/background_dijj6c.png"})`,
-    backgroundSize: 'cover'
-  },
   container: {
     position: 'relative',
     display: 'flex',
     width: '30%',
     padding: '20px',
-    margin: 'auto auto auto auto',
+    margin: '10vh auto auto auto',
     boxShadow:
       '0 0 0 1px rgba(0, 0, 0, 0.1), 0 2px 4px 1px rgba(0, 0, 0, 0.18)',
     border: '2px solid #ffc400',
@@ -33,7 +27,7 @@ const useStyles = makeStyles((theme) => ({
       width: '80%',
     },
   },
-  white: {
+  gold: {
     color: '#ffc400'
   },
   divider: {
@@ -67,16 +61,14 @@ const LandingPage = () => {
   const [page, setPage] = useState("default")
 
   return (
-    <div className={classes.outer}>
-      <div className={classes.container}>
-        <div className={classes.inner}>
-          <Typography variant="h2" className={classes.white}>MintJack</Typography>
-          <Typography variant="body2" className={classes.white}>An online multiplayer web app</Typography>
-          <Divider className={classes.divider} />
-          <LandingDefault checked={page === "default"} setPage={setPage} />
-          <Login checked={page === "login"} setPage={setPage} />
-          <Register checked={page === "register"} setPage={setPage} />
-        </div>
+    <div className={classes.container}>
+      <div className={classes.inner}>
+        <Typography variant="h2" className={classes.gold}>MintJack</Typography>
+        <Typography variant="body2" className={classes.gold}>An online multiplayer web app</Typography>
+        <Divider className={classes.divider} />
+        <LandingDefault checked={page === "default"} setPage={setPage} />
+        <Login checked={page === "login"} setPage={setPage} />
+        <Register checked={page === "register"} setPage={setPage} />
       </div>
     </div>
   )

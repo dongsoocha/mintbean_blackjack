@@ -55,6 +55,14 @@ router.post("/register", (req, res) => {
         email: req.body.email,
         password: req.body.password,
         cashBalance: 500,
+        avatar: {
+          current: 'a0',
+          owned: ['a0']
+        },
+        cardBack: {
+          current: 'a0',
+          owned: ['a0']
+        }
       });
 
       bcrypt.genSalt(10, (err, salt) => {
@@ -64,7 +72,7 @@ router.post("/register", (req, res) => {
           newUser
             .save()
             .then((user) => {
-              const payload = { id: user.id, username: user.username, email: user.email };
+              const payload = { id: user.id, username: user.username, email: user.email, balance: user.cashBalance, avatar: user.avatar.current, cardBack: user.cardBack.current };
 
               jwt.sign(payload, keys.secretOrKey, { expiresIn: 3600 }, (err, token) => {
                 res.json({
@@ -96,7 +104,7 @@ router.post("/login", (req, res) => {
     }
     bcrypt.compare(password, user.password).then((isMatch) => {
       if (isMatch) {
-        const payload = { id: user.id, username: user.username, email: user.email };
+        const payload = { id: user.id, username: user.username, email: user.email, balance: user.cashBalance, avatar: user.avatar.current, cardBack: user.cardBack.current };
 
         jwt.sign(
           payload,
@@ -105,7 +113,8 @@ router.post("/login", (req, res) => {
           (err, token) => {
             res.json({
               success: true,
-              token: 'Bearer ' + token
+              token: 'Bearer ' + token,
+              payload
             });
           }
         );

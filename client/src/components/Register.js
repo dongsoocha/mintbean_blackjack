@@ -30,7 +30,7 @@ const initialErrors = {
 }
 
 const useStyles = makeStyles((theme) => ({
-    white: {
+    gold: {
         color: '#ffc400'
     },
     m20: {
@@ -175,10 +175,10 @@ const Register = (props) => {
                             helperText={errors.registerUsername.error ? errors.registerUsername.message : ""}
                             onChange={handleChange}
                             InputProps={{
-                                className: classes.white,
+                                className: classes.gold,
                             }}
                             InputLabelProps={{
-                                className: classes.white,
+                                className: classes.gold,
                             }}
                         /></Box>
                     <Box m={1}>
@@ -196,10 +196,10 @@ const Register = (props) => {
                             error={errors.registerEmail.error}
                             helperText={errors.registerEmail.error ? errors.registerEmail.message : ""}
                             InputProps={{
-                                className: classes.white,
+                                className: classes.gold,
                             }}
                             InputLabelProps={{
-                                className: classes.white,
+                                className: classes.gold,
                             }}
                         />
                     </Box>
@@ -218,10 +218,10 @@ const Register = (props) => {
                             error={errors.registerPassword1.error}
                             helperText={errors.registerPassword1.error ? errors.registerPassword1.message : ""}
                             InputProps={{
-                                className: classes.white,
+                                className: classes.gold,
                             }}
                             InputLabelProps={{
-                                className: classes.white,
+                                className: classes.gold,
                             }}
                         />
                     </Box>
@@ -240,10 +240,10 @@ const Register = (props) => {
                             error={errors.registerPassword2.error}
                             helperText={errors.registerPassword2.error ? errors.registerPassword2.message : ""}
                             InputProps={{
-                                className: classes.white,
+                                className: classes.gold,
                             }}
                             InputLabelProps={{
-                                className: classes.white,
+                                className: classes.gold,
                             }}
                         />
                     </Box>
@@ -254,10 +254,10 @@ const Register = (props) => {
                         <Button variant="contained" type="submit" className={classes.button}>Register</Button>
                     </Box>
                     <Divider className={classes.divider} />
-                    <Typography varaint="body2" className={classes.white}>
+                    <Typography varaint="body2" className={classes.gold}>
                         Already have an account? <strong className={classes.signUp} onClick={() => props.setPage("login")}>Sign in!</strong>
                     </Typography>
-                    <Typography varaint="body2" className={classes.white}>
+                    <Typography varaint="body2" className={classes.gold}>
                         Don't want to register? <strong className={classes.signUp} onClick={() => props.setPage("default")}>Continue as guest.</strong>
                     </Typography>
                 </form>
