@@ -18,6 +18,26 @@ const UserSchema = new Schema({
         type: Number,
         required: true,
     },
+    avatar: {
+        current: {
+            type: String,
+            required: true
+        },
+        owned: {
+            type: [String],
+            required: true
+        }
+    },
+    cardBack: {
+        current: {
+            type: String,
+            required: true
+        },
+        owned: {
+            type: [String],
+            required: true
+        }
+    },
     // friends will be an array of friend models
     friends: [{
         _id: {
