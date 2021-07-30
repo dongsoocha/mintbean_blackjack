@@ -6,6 +6,7 @@ const users = require('./routes/api/users');
 const passport = require('passport');
 const cors = require("cors");
 const cookieParser = require('cookie-parser');
+const socketConn = require('./socket');
 
 mongoose
     .connect(db, { useNewUrlParser: true })
@@ -16,6 +17,10 @@ app.use(express.urlencoded({ extended: false }));
 app.use(cors());
 app.use(cookieParser());
 app.use(express.json());
+
+//var http = require("http");
+//var server = http.createServer(app);
+socketConn.socketConnect(3001);
 
 app.use(passport.initialize());
 require('./config/passport')(passport);

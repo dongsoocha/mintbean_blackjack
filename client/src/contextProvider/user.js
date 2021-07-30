@@ -3,11 +3,11 @@ import React, { createContext, useEffect, useState, useContext } from 'react';
 export const UserContext = createContext();
 export const UserUpdateContext = createContext()
 
-export function useUserContex() {
+export function useUserContext() {
     return useContext(UserContext)
 }
 
-export function useUserUpdateContex() {
+export function useUserUpdateContext() {
     return useContext(UserUpdateContext)
 }
 
@@ -17,6 +17,9 @@ const initialState = {
     username: '',
     email: '',
     currentMatchId: '',
+    balance: 0,
+    avatar: '',
+    cardBack: '',
 }
 
 const UserProvider = ({ children }) => {

@@ -3,7 +3,7 @@ import { Typography, makeStyles, Divider, Button } from "@material-ui/core";
 import Fade from '@material-ui/core/Fade';
 
 const useStyles = makeStyles((theme) => ({
-    white: {
+    gold: {
         color: '#ffc400'
     },
     m20: {
@@ -45,12 +45,12 @@ const LandingDefault = (props) => {
     return (
         <Fade in={props.checked}>
             <div className={props.checked ? "" : classes.hide}>
-                <Typography variant="h4" className={classes.white + " " + classes.m20}>Have an account?</Typography>
+                <Typography variant="h4" className={classes.gold + " " + classes.m20}>Have an account?</Typography>
                 <Button variant="contained" className={classes.landingButton} onClick={() => props.setPage("login")}>Log In</Button>
-                <Typography variant="h4" className={classes.white + " " + classes.m20}>Need an account?</Typography>
+                <Typography variant="h4" className={classes.gold + " " + classes.m20}>Need an account?</Typography>
                 <Button variant="contained" className={classes.landingButton} onClick={() => props.setPage("register")}>Register</Button>
                 <Divider className={classes.divider} />
-                <Typography varaint="body2" className={classes.white}>
+                <Typography varaint="body2" className={classes.gold}>
                     Don't want to register? <strong className={classes.goldSpan} onClick={() => props.setPage("default")}>Continue as guest.</strong>
                 </Typography>
             </div>

@@ -1,6 +1,6 @@
-import { createMuiTheme } from "@material-ui/core";
+import { createTheme } from "@material-ui/core";
 
-export const theme = createMuiTheme({
+export const theme = createTheme({
   typography: {
     fontFamily: '"Roboto"',
     fontSize: 12,
@@ -10,5 +10,16 @@ export const theme = createMuiTheme({
   },
   palette: {
     primary: { main: "#DF1B1B" }
+  },
+  overrides: {
+    MuiCssBaseline: {
+      "@global": {
+        body: {
+          backgroundImage: `url(${"https://res.cloudinary.com/dqhd5slcy/image/upload/v1627415371/background_dijj6c.png"})`,
+          backgroundSize: 'cover',
+          minHeight: '90vh'
+        }
+      }
+    }
   }
 });
