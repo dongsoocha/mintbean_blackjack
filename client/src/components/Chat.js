@@ -1,84 +1,84 @@
-import React, { useState, useEffect, useRef } from 'react';
+import React, { useState, useEffect, useContext } from 'react';
 import { Typography, makeStyles, Divider } from "@material-ui/core";
 import styled from "styled-components";
-import socketio from 'socket.io-client';
+import { SocketContext } from '../contextProvider/socket';
 
 const useStyles = makeStyles((theme) => ({
-    container: {
-      position: 'relative',
-      display: 'flex',
-      width: '30%',
-      padding: '20px',
-      margin: '10vh auto auto auto',
-      boxShadow:
-        '0 0 0 1px rgba(0, 0, 0, 0.1), 0 2px 4px 1px rgba(0, 0, 0, 0.18)',
-      border: '2px solid #ffc400',
-      borderRadius: '10px',
-      textAlign: 'center',
-      backgroundColor: '#212121',
-      minHeight: '80vh',
-      maxHeight: '90%',
-      [theme.breakpoints.down('md')]: {
-        width: '50%',
-      },
-      [theme.breakpoints.down('xs')]: {
-        width: '80%',
-      },
-    },
-    gold: {
-      color: '#ffc400'
-    },
-    divider: {
+  container: {
+    position: 'relative',
+    display: 'flex',
+    width: '30%',
+    padding: '20px',
+    margin: '10vh auto auto auto',
+    boxShadow:
+      '0 0 0 1px rgba(0, 0, 0, 0.1), 0 2px 4px 1px rgba(0, 0, 0, 0.18)',
+    border: '2px solid #ffc400',
+    borderRadius: '10px',
+    textAlign: 'center',
+    backgroundColor: '#212121',
+    minHeight: '80vh',
+    maxHeight: '90%',
+    [theme.breakpoints.down('md')]: {
       width: '50%',
-      borderTop: '1px solid #ffc400',
-      marginTop: '30px',
-      marginBottom: '30px',
-      marginLeft: '25%'
     },
-    landingButton: {
-      width: '100px',
+    [theme.breakpoints.down('xs')]: {
+      width: '80%',
     },
-    inner: {
-      margin: 'auto'
-    },
-    m30: {
-      marginTop: '20px',
-      marginBottom: '20px'
-    },
-    button: {
-      backgroundColor: '#ffc400',
-      color: '#212121',
-      '&:hover': {
-        backgroundColor: '#b28900'
-      }
-    },
-    chatbox: {
-        display: 'flex',
-        flexDirection: 'column',
-        height: '500px',
-        maxHeight: '500px',
-        overflow: 'auto',
-        width: '400px',
-        border: '1px solid #ffc400',
-        borderRadius: '10px',
-        marginTop: '25px'
-    },
-    textbox: {
-        width: '98%',
-        height: '100px',
-        borderRadius: '10px',
-        marginTop: '10px',
-        paddingLeft: '10px',
-        paddingTop: '10px',
-        fontSize: '17px',
-        backgroundColor: 'transparent',
-        border: '1px solid #ffc400',
-        outline: 'none',
-        color: 'lightgray',
-        letterSpacing: '1px',
-        lineHeight: '20px'
+  },
+  gold: {
+    color: '#ffc400'
+  },
+  divider: {
+    width: '50%',
+    borderTop: '1px solid #ffc400',
+    marginTop: '30px',
+    marginBottom: '30px',
+    marginLeft: '25%'
+  },
+  landingButton: {
+    width: '100px',
+  },
+  inner: {
+    margin: 'auto'
+  },
+  m30: {
+    marginTop: '20px',
+    marginBottom: '20px'
+  },
+  button: {
+    backgroundColor: '#ffc400',
+    color: '#212121',
+    '&:hover': {
+      backgroundColor: '#b28900'
     }
-  }))
+  },
+  chatbox: {
+    display: 'flex',
+    flexDirection: 'column',
+    height: '500px',
+    maxHeight: '500px',
+    overflow: 'auto',
+    width: '400px',
+    border: '1px solid #ffc400',
+    borderRadius: '10px',
+    marginTop: '25px'
+  },
+  textbox: {
+    width: '98%',
+    height: '100px',
+    borderRadius: '10px',
+    marginTop: '10px',
+    paddingLeft: '10px',
+    paddingTop: '10px',
+    fontSize: '17px',
+    backgroundColor: 'transparent',
+    border: '1px solid #ffc400',
+    outline: 'none',
+    color: 'lightgray',
+    letterSpacing: '1px',
+    lineHeight: '20px'
+  }
+}))
 
 const TextArea = styled.textarea`
   width: 98%;
@@ -148,23 +148,22 @@ const PartnerMessage = styled.div`
 `;
 
 const Chat = () => {
-    const classes = useStyles();
-    const [yourID, setYourID] = useState();
-    const [messages, setMessages] = useState([]);
-    const [message, setMessage] = useState("");
+  const classes = useStyles();
+  const [yourID, setYourID] = useState();
+  const [messages, setMessages] = useState([]);
+  const [message, setMessage] = useState("");
 
-    const socketRef = useRef();
+  const socket = useContext(SocketContext);
 
   useEffect(() => {
-    socketRef.current = socketio.connect('/chat');
 
-    socketRef.current.on("your id", id => {
+    socket.on("your id", id => {
       setYourID(id);
     })
 
-    socketRef.current.on("message", (message) => {
+    socket.on("message", ({ messageObject }) => {
       console.log("here");
-      receivedMessage(message);
+      receivedMessage(messageObject);
     })
   }, []);
 
@@ -179,7 +178,7 @@ const Chat = () => {
       id: yourID,
     };
     setMessage("");
-    socketRef.current.emit("send message", messageObject);
+    socket.emit("send message", { messageObject });
   }
 
   function handleChange(e) {
@@ -188,35 +187,35 @@ const Chat = () => {
 
   return (
     <div className={classes.container}>
-        <div className={classes.inner}>
+      <div className={classes.inner}>
         <Typography variant="h2" className={classes.gold}>MintJack</Typography>
         <Typography variant="h4" className={classes.gold}>Chat</Typography>
-    
+
         <div className={classes.chatbox}>
-        {messages.map((message, index) => {
-          if (message.id === yourID) {
+          {messages.map((message, index) => {
+            if (message.id === yourID) {
+              return (
+                <MyRow key={index}>
+                  <MyMessage>
+                    {message.body}
+                  </MyMessage>
+                </MyRow>
+              )
+            }
             return (
-              <MyRow key={index}>
-                <MyMessage>
+              <PartnerRow key={index}>
+                <PartnerMessage>
                   {message.body}
-                </MyMessage>
-              </MyRow>
+                </PartnerMessage>
+              </PartnerRow>
             )
-          }
-          return (
-            <PartnerRow key={index}>
-              <PartnerMessage>
-                {message.body}
-              </PartnerMessage>
-            </PartnerRow>
-          )
-        })}
+          })}
+        </div>
+        <Form onSubmit={sendMessage}>
+          <TextArea value={message} onChange={handleChange} placeholder="Say something..." />
+          <Button>Send</Button>
+        </Form>
       </div>
-      <Form onSubmit={sendMessage}>
-        <TextArea value={message} onChange={handleChange} placeholder="Say something..." />
-        <Button>Send</Button>
-      </Form>
-    </div>
     </div>
   );
 };
