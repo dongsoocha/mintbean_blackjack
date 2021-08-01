@@ -2,7 +2,7 @@ import React, { useEffect, useState, useContext } from 'react';
 import { useHistory } from 'react-router-dom';
 import { useUserContext, useUserUpdateContext } from '../contextProvider/user';
 import { SocketContext } from '../contextProvider/socket';
-import { makeStyles, Grid, Box } from "@material-ui/core";
+import { makeStyles, Typography, Button, Box } from "@material-ui/core";
 import Player from '../components/Player';
 import Dealer from '../components/Dealer';
 
@@ -52,8 +52,8 @@ const useStyles = makeStyles((theme) => ({
         border: '2px solid #ffc400',
         borderRadius: '10px',
         textAlign: 'center',
-        background: 'rgb(79,79,79)',
-        background: 'radial-gradient(circle, rgba(79,79,79,1) 0%, rgba(42,42,42,1) 35%, rgba(0,0,0,1) 100%)',
+        background: 'rgb(33,33,33)',
+        background: 'radial-gradient(circle, rgba(33,33,33,1) 0%, rgba(25,25,25,1) 35%, rgba(0,0,0,1) 100%)',
         minHeight: '80vh',
         maxHeight: '90%',
         [theme.breakpoints.down('md')]: {
@@ -72,7 +72,7 @@ const useStyles = makeStyles((theme) => ({
         position: 'relative'
     },
     row: {
-        minHeight: '35vh',
+        minHeight: '30vh',
         minWidth: '100%',
         padding: 5,
         display: 'flex',
@@ -97,6 +97,30 @@ const useStyles = makeStyles((theme) => ({
         dsiplay: 'flex',
         justifyContent: 'center',
         alignItems: 'center'
+    },
+    turn: {
+        minHeight: '10vh',
+        display: 'flex',
+        justifyContent: 'center',
+        width: '100%',
+        alignItems: 'center'
+    },
+    gold: {
+        color: '#ffc400'
+    },
+    buttonRed: {
+        backgroundColor: '#f44336',
+        color: '#212121',
+        '&:hover': {
+            backgroundColor: '#aa2e25'
+        }
+    },
+    buttonGreen: {
+        backgroundColor: '#4caf50',
+        color: '#212121',
+        '&:hover': {
+            backgroundColor: '#357a38'
+        }
     }
 }))
 
@@ -128,6 +152,31 @@ const Table = () => {
     // Players will have card components as children
     // Chat component will be on the side?
 
+    const renderTurn = () => {
+        return gameState.players[gameState.currentPlayer].name === userState.username ? <div>
+            <Typography variant="h5" className={classes.gold} display="inline"> Your Turn:</Typography>
+            <Box display="inline" component="div" m={1} p={1}>
+                <Button variant="contained" className={classes.buttonGreen}>
+                    Hit
+                </Button>
+            </Box>
+            <Typography variant="h5" className={classes.gold} display="inline">or</Typography>
+            <Box display="inline" component="div" m={1} p={1}>
+                <Button variant="contained" className={classes.buttonRed}>
+                    Stand
+                </Button>
+            </Box>
+        </div>
+            :
+            <Typography variant="h5" className={classes.gold}>It is currently {gameState.players[gameState.currentPlayer].name}'s turn.</Typography>
+    }
+
+    const test1 = () => {
+        let z = Math.max((gameState.currentPlayer + 1) % gameState.players.length, 1)
+        setGameState((prev) => ({ ...prev, currentPlayer: z }))
+        setUserState((prev) => ({ ...prev, username: gameState.players[z].name }))
+    }
+
     return (
         <div className={classes.container}>
             <div className={classes.inner}>
@@ -135,6 +184,10 @@ const Table = () => {
                     <div className={classes.dealer}>
                         {gameState.players && <Dealer dealer={gameState.players[0]} />}
                     </div>
+                </div>
+                <div className={classes.turn}>
+                    {gameState.players && renderTurn()}
+                    <Button variant="contained" onClick={test1}>Test</Button>
                 </div>
                 <div className={classes.row + " " + classes.players}>
                     {gameState.players && gameState.players.slice(1).map(player =>
