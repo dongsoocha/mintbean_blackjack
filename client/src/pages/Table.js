@@ -106,7 +106,15 @@ const useStyles = makeStyles((theme) => ({
         alignItems: 'center'
     },
     gold: {
-        color: '#ffc400'
+        color: '#ffc400',
+        [theme.breakpoints.down('sm')]: {
+            maxWidth: '20vw',
+            overflowX: 'auto',
+            fontSize: '18px'
+        },
+        [theme.breakpoints.down('xs')]: {
+            fontSize: '14px'
+        },
     },
     buttonRed: {
         backgroundColor: '#f44336',
@@ -121,6 +129,21 @@ const useStyles = makeStyles((theme) => ({
         '&:hover': {
             backgroundColor: '#357a38'
         }
+    },
+    row2: {
+        display: 'flex',
+        flexDirection: 'row',
+        justifyContent: 'center',
+        alignItems: 'center',
+        [theme.breakpoints.down('sm')]: {
+            flexDirection: 'row',
+            justifyContent: 'space-between',
+            minWidth: '50vw',
+            borderBottom: '2px solid #ffc400'
+        },
+        [theme.breakpoints.down('xs')]: {
+            minWidth: '60vw'
+        },
     }
 }))
 
@@ -153,14 +176,14 @@ const Table = () => {
     // Chat component will be on the side?
 
     const renderTurn = () => {
-        return gameState.players[gameState.currentPlayer].name === userState.username ? <div>
-            <Typography variant="h5" className={classes.gold} display="inline"> Your Turn:</Typography>
+        return gameState.players[gameState.currentPlayer].name === userState.username ? <div className={classes.row2}>
+            <Typography variant="h5" className={classes.gold} > Your Turn:</Typography>
             <Box display="inline" component="div" m={1} p={1}>
                 <Button variant="contained" className={classes.buttonGreen}>
                     Hit
                 </Button>
             </Box>
-            <Typography variant="h5" className={classes.gold} display="inline">or</Typography>
+            <Typography variant="h5" className={classes.gold}>or</Typography>
             <Box display="inline" component="div" m={1} p={1}>
                 <Button variant="contained" className={classes.buttonRed}>
                     Stand
@@ -174,7 +197,7 @@ const Table = () => {
     const test1 = () => {
         let z = Math.max((gameState.currentPlayer + 1) % gameState.players.length, 1)
         setGameState((prev) => ({ ...prev, currentPlayer: z }))
-        setUserState((prev) => ({ ...prev, username: gameState.players[z].name }))
+        //setUserState((prev) => ({ ...prev, username: gameState.players[z].name }))
     }
 
     return (
