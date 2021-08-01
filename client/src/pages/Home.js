@@ -101,7 +101,7 @@ const Home = () => {
 
     const joinRoom = () => {
         // TODO: Socket emit to join the room with user id
-        socket.emit('test1')
+        history.push('/table')
     }
 
     const reload = () => {
