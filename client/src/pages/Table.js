@@ -5,6 +5,7 @@ import { SocketContext } from '../contextProvider/socket';
 import { makeStyles, Typography, Button, Box } from "@material-ui/core";
 import Player from '../components/Player';
 import Dealer from '../components/Dealer';
+import Chat from '../components/Chat';
 
 const fakeGame = {
     players: [{
@@ -201,26 +202,30 @@ const Table = () => {
     }
 
     return (
-        <div className={classes.container}>
-            <div className={classes.inner}>
-                <div className={classes.row}>
-                    <div className={classes.dealer}>
-                        {gameState.players && <Dealer dealer={gameState.players[0]} />}
+        <div className={classes.outer}>
+            <div className={classes.container}>
+                <div className={classes.inner}>
+                    <div className={classes.row}>
+                        <div className={classes.dealer}>
+                            {gameState.players && <Dealer dealer={gameState.players[0]} />}
+                        </div>
+                    </div>
+                    <div className={classes.turn}>
+                        {gameState.players && renderTurn()}
+                        <Button variant="contained" onClick={test1}>Test</Button>
+                    </div>
+                    <div className={classes.row + " " + classes.players}>
+                        {gameState.players && gameState.players.slice(1).map(player =>
+                            <div className={classes.players} key={player.name}>
+                                <Player name={player.name} hand={player.hand} avatar={player.avatar} cardBack={player.cardBack} />
+                            </div>
+                        )}
                     </div>
                 </div>
-                <div className={classes.turn}>
-                    {gameState.players && renderTurn()}
-                    <Button variant="contained" onClick={test1}>Test</Button>
-                </div>
-                <div className={classes.row + " " + classes.players}>
-                    {gameState.players && gameState.players.slice(1).map(player =>
-                        <div className={classes.players} key={player.name}>
-                            <Player name={player.name} hand={player.hand} avatar={player.avatar} cardBack={player.cardBack} />
-                        </div>
-                    )}
-                </div>
-            </div>
-        </div >
+            </div >
+            <Chat />
+        </div>
+
     );
 }
 
