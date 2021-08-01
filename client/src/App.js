@@ -6,6 +6,7 @@ import { theme } from "./themes/theme";
 import LandingPage from "./pages/Landing";
 import Test from "./pages/Test";
 import Home from "./pages/Home";
+import Chat from "./components/Chat";
 import Table from "./pages/Table";
 
 import { UserProvider } from "./contextProvider/user";
@@ -25,6 +26,7 @@ function App() {
               <Route path="/test" component={Test} />
               <Route path="/home" exact component={Home} />
               <Route path="/table" exact component={Table} />
+              <Route path="/chat" component={Chat} />
             </BrowserRouter>
           </SocketContext.Provider>
         </UserProvider>
