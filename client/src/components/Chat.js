@@ -122,7 +122,7 @@ const MyRow = styled.div`
 
 const MyMessage = styled.div`
   width: 45%;
-  background-color: pink;
+  background-color: #ffc400;
   color: #46516e;
   padding: 10px;
   margin-right: 5px;
@@ -137,9 +137,9 @@ const PartnerRow = styled(MyRow)`
 
 const PartnerMessage = styled.div`
   width: 45%;
-  background-color: transparent;
+  background-color: #ffc400;
   color: lightgray;
-  border: 1px solid lightgray;
+  border: 1px solid #ffc400;
   padding: 10px;
   margin-left: 5px;
   text-align: center;
