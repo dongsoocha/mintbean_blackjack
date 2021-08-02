@@ -28,11 +28,28 @@ const useStyles = makeStyles((theme) => ({
         },
     },
     gold: {
+        maxWidth: '8vw',
+        overflowX: 'auto',
         color: '#ffc400',
+        scrollbarColor: '#424242 #212121',
+        scrollbarWidth: 'thin',
+        '&::-webkit-scrollbar': {
+            height: '12px',
+            width: '12px',
+            background: '#212121',
+            borderRadius: '10px'
+        },
+        '&::-webkit-scrollbar-track': {
+            boxShadow: 'inset 0 0 6px rgba(0,0,0,0.00)',
+            webkitBoxShadow: 'inset 0 0 6px rgba(0,0,0,0.00)'
+        },
+        '&::-webkit-scrollbar-thumb': {
+            backgroundColor: '#424242',
+            borderRadius: '10px'
+        },
         [theme.breakpoints.down('sm')]: {
             maxWidth: '20vw',
-            overflowX: 'auto',
-            fontSize: '18px'
+            fontSize: '18px',
         },
         [theme.breakpoints.down('xs')]: {
             fontSize: '14px'
@@ -56,6 +73,9 @@ const useStyles = makeStyles((theme) => ({
             height: theme.spacing(6),
         },
     },
+    name: {
+
+    }
 
 }))
 

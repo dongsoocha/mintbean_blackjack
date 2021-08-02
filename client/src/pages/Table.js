@@ -214,6 +214,25 @@ const useStyles = makeStyles((theme) => ({
             right: '4vh',
             top: '4vh'
         },
+    },
+    name: {
+        minWidth: '40vw',
+        scrollbarColor: '#424242 #212121',
+        scrollbarWidth: 'thin',
+        '&::-webkit-scrollbar': {
+            height: '12px',
+            width: '12px',
+            background: '#212121',
+            borderRadius: '10px'
+        },
+        '&::-webkit-scrollbar-track': {
+            boxShadow: 'inset 0 0 6px rgba(0,0,0,0.00)',
+            webkitBoxShadow: 'inset 0 0 6px rgba(0,0,0,0.00)'
+        },
+        '&::-webkit-scrollbar-thumb': {
+            backgroundColor: '#424242',
+            borderRadius: '10px'
+        },
     }
 }))
 
@@ -262,7 +281,7 @@ const Table = () => {
             </Box>
         </div>
             :
-            <Typography variant="h5" className={classes.gold}>It is currently {gameState.players[gameState.currentPlayer].name}'s turn.</Typography>
+            <Typography variant="h5" className={classes.gold + " " + classes.name}>It is currently {gameState.players[gameState.currentPlayer].name}'s turn.</Typography>
     }
 
     const test1 = () => {
