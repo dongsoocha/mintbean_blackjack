@@ -4,10 +4,7 @@ const readline = require('readline');
 class Game {
     constructor() {
         this.players = [];
-        this.playerCards = new Array();
-        for (let i = 1; i <= players.length + 1; i++) {
-            this.playerCards.push([]);
-        }
+        this.playerCards = [];
         this.waiting = [];
         this.leaving = [];
         this.inProgress = false;
@@ -43,11 +40,16 @@ class Game {
             avatar: 'a0',
             cardBack: 'a0',
         });
-
+        console.log(this.deck.length);
+        console.log(this.players.length);
+        console.log(state);
         return state;
     }
 
     startGame() {
+        for (let i = 1; i <= this.players.length + 1; i++) {
+            this.playerCards.push([]);
+        }
         this.inProgress = true;
         for (let playerCard of this.playerCards) {
             playerCard.push(this.deck.pop());
@@ -72,6 +74,7 @@ class Game {
         //reset deck
         this.deck = new Deck();
 
+        
         //reset playercards
         this.playerCards = new Array();
         for (let i = 1; i <= players.length + 1; i++) {
@@ -199,3 +202,28 @@ class Game {
         return score;
     };
 }
+
+
+let p1 = {
+  username: 'p1',
+  avatar: 'ao',
+  cardBack: "a0",
+};
+let p2 = {
+  username: "p2",
+  avatar: "ao",
+  cardBack: "a0",
+};
+let p3 = {
+  username: "p3",
+  avatar: "ao",
+  cardBack: "a0",
+};
+
+let game = new Game();
+game.addPlayer(p1);
+game.addPlayer(p2);
+game.addPlayer(p3);
+game.startGame();
+game.getState();
+
