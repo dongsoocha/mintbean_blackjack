@@ -5,7 +5,7 @@ class Game {
     constructor(players) {
         this.players = players;
         this.playerCards = new Array();
-        for (let i = 1; i <= players + 1; i++) {
+        for (let i = 1; i <= players.length + 1; i++) {
             this.playerCards.push([]);
         }
         this.inProgress = true;
