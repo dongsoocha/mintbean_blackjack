@@ -24,16 +24,20 @@ class Game {
     }
 
     getState() {
-        let state = [];
+        let state = {
+            players: [],
+            current: this.currentPlayer,
+            size: this.deck.length,
+        };
         for (let i = 0; i < this.players.length; i++) {
-            state.push({
+            state.players.push({
                 name: this.players[i].username,
                 hand: this.playerCards[i],
                 avatar: this.players[i].avatar,
                 cardBack: 'a0',
             })
         }
-        state.push({
+        state.players.push({
             name: 'dealer',
             hand: this.playerCards[this.playerCards.length - 1],
             avatar: 'a0',
