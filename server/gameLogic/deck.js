@@ -11,9 +11,9 @@ module.exports = class Deck {
         const suits = ["S", "C", "H", "D"];
         let i = 1;
         for (let suit of suits) {
-            const vals = ['1', '2', '3', '4', '5', '6', '7', '8', '9', '10', 'J', 'Q', 'K'];
+            const vals = ['A', '2', '3', '4', '5', '6', '7', '8', '9', '10', 'J', 'Q', 'K'];
             for (let val of vals) {
-                this.cards.push({'val': val, 'suit': suit, 'id': `${val}${suit}`});
+                this.cards.push({ 'val': val, 'suit': suit, 'id': `${val}${suit}` });
                 i++;
             }
         }
@@ -32,7 +32,7 @@ module.exports = class Deck {
                 ids.add(newCard['id']);
             }
         }
-        
+
         this.cards = deck;
     }
 

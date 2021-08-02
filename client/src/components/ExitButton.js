@@ -49,7 +49,7 @@ const useStyles = makeStyles((theme) => ({
     }
 }))
 
-const ExitButton = () => {
+const ExitButton = (props) => {
     const classes = useStyles();
     const history = useHistory();
 
@@ -58,7 +58,7 @@ const ExitButton = () => {
     }
 
     return (
-        <IconButton onClick={returnHome} className={classes.hover}>
+        <IconButton onClick={props.click ? props.click : returnHome} className={classes.hover}>
             <div>
                 <img src={`${process.env.PUBLIC_URL}/assets/icon/exit.png`} alt="exit" className={classes.exitIcon} />
                 <Typography variant="body2" className={classes.gold + " " + classes.shiftLeft}>Exit</Typography>

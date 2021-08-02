@@ -47,7 +47,7 @@ const Dealer = (props) => {
             <Box m={3}>
                 <div className={classes.inner}>
                     <img src={process.env.PUBLIC_URL + `/assets/deck/${props.dealer.cardBack}.png`} className={classes.card} />
-                    <Typography variant="h5" className={classes.gold}>Cards: {43}</Typography>
+                    <Typography variant="h5" className={classes.gold}>Cards: {props.deckSize}</Typography>
                 </div>
             </Box>
             <Box m={3}>
@@ -64,13 +64,15 @@ const Dealer = (props) => {
                                 id={card.id}
                                 user={props.dealer.name}
                                 back={props.dealer.cardBack} />)}
-                            <Card
-                                key={props.dealer.hand[handSize - 1].id}
-                                val={props.dealer.hand[handSize - 1].val}
-                                suit={props.dealer.hand[handSize - 1].suit}
-                                id={props.dealer.hand[handSize - 1].id}
-                                user={userState.username}
-                                back={props.dealer.cardBack} />
+                            {props.dealer.hand.length > 0 &&
+                                <Card
+                                    key={props.dealer.hand[handSize - 1].id}
+                                    val={props.dealer.hand[handSize - 1].val}
+                                    suit={props.dealer.hand[handSize - 1].suit}
+                                    id={props.dealer.hand[handSize - 1].id}
+                                    user={userState.username}
+                                    back={props.dealer.cardBack} />
+                            }
                         </div>
                     </Box>
                 </div>

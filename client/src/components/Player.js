@@ -102,6 +102,7 @@ const Player = (props) => {
             <Divider className={classes.divider} />
             <Typography variant="h5" className={classes.gold}>{props.name}</Typography>
             <Avatar src={avatarMap[props.avatar].src} alt="avatar" className={classes.avatar} />
+            {props.result && <Typography variant="h5" className={classes.gold}>{props.result}</Typography>}
         </div>
     );
 }

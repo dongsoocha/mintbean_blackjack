@@ -229,7 +229,7 @@ const useStyles = makeStyles((theme) => ({
 
 const Table = () => {
 
-    const [gameState, setGameState] = useState(fakeGame) // Temp game
+    const [gameState, setGameState] = useState(null) // Temp game
     const [showChatSmallScreen, setShowChatSmallScreen] = useState(false)
     const userState = useUserContext();
     const setUserState = useUserUpdateContext();
@@ -241,6 +241,22 @@ const Table = () => {
     useEffect(() => {
         // TODO: On mount retrieve game state from socket
         // TODO: Check for emitions for updating game state
+        if (!gameState) {
+            console.log(userState.username)
+            socket.emit('join-room', {
+                player: {
+                    name: userState.username,
+                    hand: [],
+                    avatar: userState.avatar,
+                    cardBack: 'a0'
+                }
+            })
+        }
+        socket.on('update-game-state', (game) => {
+            console.log(game)
+            setGameState(game);
+        });
+        return () => socket.off('update-game-state');
     }, [])
 
     const playerMove = (move) => {
@@ -260,7 +276,7 @@ const Table = () => {
         return gameState.players[gameState.currentPlayer].name === userState.username ? <div className={classes.row2}>
             <Typography variant="h5" className={classes.gold} > Your Turn:</Typography>
             <Box display="inline" component="div" m={1} p={1}>
-                <Button variant="contained" className={classes.buttonGreen}>
+                <Button variant="contained" className={classes.buttonGreen} onClick={hit}>
                     Hit
                 </Button>
             </Box>
@@ -276,14 +292,27 @@ const Table = () => {
     }
 
     const test1 = () => {
-        let z = Math.max((gameState.currentPlayer + 1) % gameState.players.length, 1)
-        setGameState((prev) => ({ ...prev, currentPlayer: z }))
-        //setUserState((prev) => ({ ...prev, username: gameState.players[z].name }))
-        console.log(showChatSmallScreen)
+        socket.emit("start-game")
+    }
+
+    const restart = () => {
+        socket.emit("restart-game")
+    }
+
+    const hit = () => {
+        socket.emit("hit")
     }
 
     const leaveRoom = () => {
         // TODO: Remove player from the game
+        socket.emit('leave-room', {
+            player: {
+                name: userState.username,
+                hand: [],
+                avatar: userState.avatar,
+                cardBack: 'a0'
+            }
+        })
         history.push("/home")
     }
 
@@ -295,7 +324,7 @@ const Table = () => {
         <div className={classes.outer}>
             <div className={classes.container}>
                 <Box className={classes.exit} >
-                    <ExitButton />
+                    <ExitButton click={leaveRoom} />
                 </Box>
                 <IconButton className={classes.chat + (showChatSmallScreen ? ` ${classes.shiftUpRight}` : "")} onClick={toggleChatSmallScreen}>
                     <div>
@@ -306,17 +335,18 @@ const Table = () => {
                 <div className={classes.inner}>
                     <div className={classes.row}>
                         <div className={classes.dealer}>
-                            {gameState.players && <Dealer dealer={gameState.players[0]} />}
+                            {gameState && <Dealer dealer={gameState.players[gameState.players.length - 1]} size={gameState.deckSize} />}
                         </div>
                     </div>
                     <div className={classes.turn}>
-                        {gameState.players && renderTurn()}
+                        {gameState && renderTurn()}
                         <Button variant="contained" onClick={test1}>Test</Button>
+                        <Button variant="contained" onClick={restart}>Restart</Button>
                     </div>
                     <div className={classes.row + " " + classes.players}>
-                        {gameState.players && gameState.players.slice(1).map(player =>
+                        {gameState && gameState.players.slice(0, gameState.players.length - 1).map(player =>
                             <div className={classes.players} key={player.name}>
-                                <Player name={player.name} hand={player.hand} avatar={player.avatar} cardBack={player.cardBack} />
+                                <Player name={player.name} hand={player.hand} avatar={player.avatar} cardBack={player.cardBack} result={player.result ? player.result : ''} />
                             </div>
                         )}
                     </div>
