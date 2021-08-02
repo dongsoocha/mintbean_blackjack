@@ -28,28 +28,6 @@ const useStyles = makeStyles((theme) => ({
             width: '80%',
         },
     },
-    divider: {
-        width: '102%',
-        borderTop: '1px solid #ffc400',
-        marginTop: '80px',
-        marginBottom: '30px',
-        transform: 'translateX(-20px)',
-        [theme.breakpoints.down('xs')]: {
-            marginTop: '50px',
-            transform: 'translateX(-40px)',
-            width: '125%'
-        },
-    },
-    dividerV: {
-        height: '95%',
-        position: 'absolute',
-        transform: 'translateX(100px)',
-        borderLeft: '1px solid #ffc400',
-        [theme.breakpoints.down('xs')]: {
-            transform: 'translate(40px, -20px)',
-            height: '95%'
-        },
-    },
     gold: {
         color: '#ffc400'
     },
@@ -179,7 +157,7 @@ const Store = () => {
     const setUserState = useUserUpdateContext();
     const [selected, setSelected] = useState("avatars")
     const [ownedAvatars, setOwnedAvatars] = useState([])
-    const [openSnackBar, setOpenSnackBar] = useState({ open: 'false', severity: '', message: '' })
+    const [openSnackBar, setOpenSnackBar] = useState({ open: false, severity: 'error', message: '' })
     const [modal, setModal] = useState({ open: false, type: 'avatar', id: 'a0' })
 
     const handleSelected = (select) => {
@@ -256,7 +234,7 @@ const Store = () => {
     }
 
     const handleClose = (event, reason) => {
-        setOpenSnackBar({ open: false, severity: "", message: '' })
+        setOpenSnackBar({ open: false, severity: "error", message: '' })
     };
 
     const handleModalClose = () => {

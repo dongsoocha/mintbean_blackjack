@@ -57,7 +57,7 @@ class Game {
         let ace = false;
         this.playerCards[player].forEach(card => {
             let value = card.val;
-            switch (value){
+            switch (value) {
                 case '1':
                     ace = true;
                     score += 11;
