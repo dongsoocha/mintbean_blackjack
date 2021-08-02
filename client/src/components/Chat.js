@@ -7,22 +7,40 @@ const useStyles = makeStyles((theme) => ({
   container: {
     position: 'relative',
     display: 'flex',
-    width: '30%',
+    width: '20%',
     padding: '20px',
-    margin: '10vh auto auto auto',
+    margin: '10vh auto 10vh 0',
     boxShadow:
       '0 0 0 1px rgba(0, 0, 0, 0.1), 0 2px 4px 1px rgba(0, 0, 0, 0.18)',
     border: '2px solid #ffc400',
     borderRadius: '10px',
     textAlign: 'center',
-    backgroundColor: '#212121',
+    background: 'rgb(33,33,33)',
+    background: 'radial-gradient(circle, rgba(33,33,33,1) 0%, rgba(25,25,25,1) 35%, rgba(0,0,0,1) 100%)',
     minHeight: '80vh',
-    maxHeight: '90%',
+    justifyContent: 'center',
     [theme.breakpoints.down('md')]: {
-      width: '50%',
+      width: '0',
+      display: 'none'
     },
     [theme.breakpoints.down('xs')]: {
       width: '80%',
+    },
+  },
+  revealed: {
+    [theme.breakpoints.down('md')]: {
+      position: 'absolute !important',
+      zIndex: '2 !important',
+      right: '10vw !important',
+      padding: '5px !important',
+      width: '30% !important',
+      display: 'flex !important'
+    },
+    [theme.breakpoints.down('sm')]: {
+      width: '50% !important',
+    },
+    [theme.breakpoints.down('xs')]: {
+      width: '80% !important',
     },
   },
   gold: {
@@ -55,21 +73,21 @@ const useStyles = makeStyles((theme) => ({
   chatbox: {
     display: 'flex',
     flexDirection: 'column',
-    height: '500px',
-    maxHeight: '500px',
+    height: '45vh',
     overflow: 'auto',
-    width: '400px',
+    width: '100%',
     border: '1px solid #ffc400',
     borderRadius: '10px',
-    marginTop: '25px'
+    margin: '25px auto auto auto'
   },
   textbox: {
-    width: '98%',
+    width: '100%',
     height: '100px',
     borderRadius: '10px',
     marginTop: '10px',
     paddingLeft: '10px',
     paddingTop: '10px',
+    paddingBottom: '10px',
     fontSize: '17px',
     backgroundColor: 'transparent',
     border: '1px solid #ffc400',
@@ -81,12 +99,14 @@ const useStyles = makeStyles((theme) => ({
 }))
 
 const TextArea = styled.textarea`
-  width: 98%;
-  height: 100px;
+  width: 100%;
+  height: 80px;
   border-radius: 10px;
   margin-top: 10px;
+  margin-bottom: 10px;
   padding-left: 10px;
   padding-top: 10px;
+  padding-bottom: 10px;
   font-size: 17px;
   background-color: transparent;
   border: 1px solid #ffc400;
@@ -110,7 +130,7 @@ const Button = styled.button`
 `;
 
 const Form = styled.form`
-  width: 400px;
+  width:  100%;
 `;
 
 const MyRow = styled.div`
@@ -147,7 +167,7 @@ const PartnerMessage = styled.div`
   border-bottom-left-radius: 10%;
 `;
 
-const Chat = () => {
+const Chat = (props) => {
   const classes = useStyles();
   const [yourID, setYourID] = useState();
   const [messages, setMessages] = useState([]);
@@ -179,6 +199,7 @@ const Chat = () => {
     };
     setMessage("");
     socket.emit("send message", { messageObject });
+    console.log(props.show)
   }
 
   function handleChange(e) {
@@ -186,10 +207,10 @@ const Chat = () => {
   }
 
   return (
-    <div className={classes.container}>
+    <div className={classes.container + (props.show ? ` ${classes.revealed}` : "")}>
       <div className={classes.inner}>
-        <Typography variant="h2" className={classes.gold}>MintJack</Typography>
-        <Typography variant="h4" className={classes.gold}>Chat</Typography>
+        <Typography variant={"h5"} className={classes.gold}>MintJack</Typography>
+        <Typography variant={"body2"} className={classes.gold}>Chat</Typography>
 
         <div className={classes.chatbox}>
           {messages.map((message, index) => {

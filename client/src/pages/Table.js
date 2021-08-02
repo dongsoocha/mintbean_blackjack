@@ -2,7 +2,8 @@ import React, { useEffect, useState, useContext } from 'react';
 import { useHistory } from 'react-router-dom';
 import { useUserContext, useUserUpdateContext } from '../contextProvider/user';
 import { SocketContext } from '../contextProvider/socket';
-import { makeStyles, Typography, Button, Box } from "@material-ui/core";
+import { makeStyles, Typography, Button, Box, IconButton } from "@material-ui/core";
+import ChatIcon from '@material-ui/icons/Chat';
 import Player from '../components/Player';
 import Dealer from '../components/Dealer';
 import Chat from '../components/Chat';
@@ -47,7 +48,7 @@ const useStyles = makeStyles((theme) => ({
         display: 'flex',
         width: '60%',
         padding: '5vh',
-        margin: '10vh auto 10vh auto',
+        margin: '10vh 0 10vh auto',
         boxShadow:
             '0 0 0 1px rgba(0, 0, 0, 0.1), 0 2px 4px 1px rgba(0, 0, 0, 0.18)',
         border: '2px solid #ffc400',
@@ -58,7 +59,8 @@ const useStyles = makeStyles((theme) => ({
         minHeight: '80vh',
         maxHeight: '90%',
         [theme.breakpoints.down('md')]: {
-            width: '70%',
+            width: '80%',
+            marginRight: 'auto'
         },
         [theme.breakpoints.down('xs')]: {
             width: '80%',
@@ -145,12 +147,80 @@ const useStyles = makeStyles((theme) => ({
         [theme.breakpoints.down('xs')]: {
             minWidth: '60vw'
         },
+    },
+    outer: {
+        display: 'flex',
+        maxHeight: '100vh',
+        [theme.breakpoints.down('sm')]: {
+            maxHeight: 'none',
+        },
+    },
+    exit: {
+        position: 'absolute',
+        zIndex: '1',
+        height: '72px',
+        width: '72px',
+        display: 'flex',
+        justifyContent: 'center',
+        alignItems: 'center',
+        '&:hover': {
+            filter: 'dropShadow(0 0 10px #FF0000)',
+            backgroundColor: 'rgb(255,196,0,0.1)'
+        },
+        [theme.breakpoints.down('xs')]: {
+            transform: 'translate(-40px, -30px)',
+        },
+    },
+    exitIcon: {
+        width: "36px",
+        height: '36px',
+        color: '#ffc400',
+        display: 'block',
+        '&:hover': {
+            width: "40px",
+            height: '40px',
+        }
+    },
+    shiftLeft: {
+        transform: 'translateX(-5px)'
+    },
+    chat: {
+        position: 'absolute',
+        zIndex: '3',
+        right: '4vh',
+        height: '72px',
+        width: '72px',
+        display: 'none',
+        justifyContent: 'center',
+        alignItems: 'center',
+        '&:hover': {
+            filter: 'dropShadow(0 0 10px #FF0000)',
+            backgroundColor: 'rgb(255,196,0,0.1)'
+        },
+        [theme.breakpoints.down('md')]: {
+            display: 'flex',
+        },
+        [theme.breakpoints.down('xs')]: {
+            transform: 'translate(35px, -30px)',
+        },
+    },
+    shiftUpRight: {
+        right: '4vh',
+        [theme.breakpoints.down('md')]: {
+            right: '1vh',
+            top: '1vh'
+        },
+        [theme.breakpoints.down('xs')]: {
+            right: '4vh',
+            top: '4vh'
+        },
     }
 }))
 
 const Table = () => {
 
     const [gameState, setGameState] = useState(fakeGame) // Temp game
+    const [showChatSmallScreen, setShowChatSmallScreen] = useState(false)
     const userState = useUserContext();
     const setUserState = useUserUpdateContext();
     const classes = useStyles();
@@ -199,11 +269,33 @@ const Table = () => {
         let z = Math.max((gameState.currentPlayer + 1) % gameState.players.length, 1)
         setGameState((prev) => ({ ...prev, currentPlayer: z }))
         //setUserState((prev) => ({ ...prev, username: gameState.players[z].name }))
+        console.log(showChatSmallScreen)
+    }
+
+    const leaveRoom = () => {
+        // TODO: Remove player from the game
+        history.push("/home")
+    }
+
+    const toggleChatSmallScreen = () => {
+        setShowChatSmallScreen(prevState => !prevState)
     }
 
     return (
         <div className={classes.outer}>
             <div className={classes.container}>
+                <IconButton className={classes.exit} onClick={leaveRoom}>
+                    <div>
+                        <img src={`${process.env.PUBLIC_URL}/assets/icon/exit.png`} alt="exit" className={classes.exitIcon} />
+                        <Typography variant="body2" className={classes.gold + " " + classes.shiftLeft}>Exit</Typography>
+                    </div>
+                </IconButton>
+                <IconButton className={classes.chat + (showChatSmallScreen ? ` ${classes.shiftUpRight}` : "")} onClick={toggleChatSmallScreen}>
+                    <div>
+                        <ChatIcon className={classes.exitIcon} />
+                        <Typography variant="body2" className={classes.gold}>Chat</Typography>
+                    </div>
+                </IconButton>
                 <div className={classes.inner}>
                     <div className={classes.row}>
                         <div className={classes.dealer}>
@@ -223,7 +315,7 @@ const Table = () => {
                     </div>
                 </div>
             </div >
-            <Chat />
+            <Chat show={showChatSmallScreen} />
         </div>
 
     );

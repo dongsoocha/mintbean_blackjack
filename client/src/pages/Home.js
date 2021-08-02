@@ -109,6 +109,11 @@ const Home = () => {
         // TODO: Give user 500 credits if they hit 0
     }
 
+    const logout = () => {
+        // TODO: Properly logout
+        history.push("/")
+    }
+
     return (
         <div className={classes.container}>
             <div className={classes.inner}>
@@ -132,7 +137,7 @@ const Home = () => {
                     <Button variant="contained" className={classes.button + " " + classes.buttonGold} onClick={() => console.log(userState)}>Store</Button>
                 </Box>
                 <Box component="div" display="block" m={3}>
-                    <Button variant="contained" className={classes.buttonLogout + " " + classes.button}>Logout</Button>
+                    <Button variant="contained" className={classes.buttonLogout + " " + classes.button} onClick={logout}>Logout</Button>
                 </Box>
 
             </div>
