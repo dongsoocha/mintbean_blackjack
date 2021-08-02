@@ -8,10 +8,13 @@ class Game {
         for (let i = 1; i <= players + 1; i++) {
             this.playerCards.push([]);
         }
+        this.inProgress = true;
         this.currentPlayer = 0;
         this.deck = new Deck();
         this.startGame = this.startGame.bind(this);
-        this.takeTurn = this.takeTurn.bind(this);
+        this.hit = this.hit.bind(this);
+        this.stand = this.stand.bind(this);
+        this.endGame = this.endGame.bind(this);
     }
 
     startGame() {
@@ -23,33 +26,46 @@ class Game {
         }
     }
 
-    takeTurn() {
-        const rl = readline.createInterface({
-            input: process.stdin,
-            output: process.stdout,
-        })
-        if (this.currentPlayer === this.players) {
-            this.endRound();
-        } else {
-            // let score = this.calcScore(this.currentPlayer);
-            let end = false;
-            while (!end) {
-                // let score = this.calcScore(this.currentPlayer);
-                // console.log(`current score: ${score}`);
-                console.log('Hit or Stand?');
-                rl.on('line', move => {
-                    switch (move) {
-                        case 'Hit':
-                            this.playerCards(this.currentPlayer).push(this.deck.pop());
-                            break;
-                        case 'Stand':
-                            end = true;
-                            break;
-                    }
-                    process.exit(0);
-                });
+    hit() {
+        this.playerCards[this.currentPlayer].push(this.deck.pop());
+        let score = this.calcScore(this.currentPlayer);
+        if (score >= 21) {
+            this.currentPlayer++;
+            if (this.currentPlayer === this.playerCards.length - 1) {
+                this.endGame();
             }
         }
+        console.log(score);
+    }
+
+    stand() {
+        this.currentPlayer++;
+        if (this.currentPlayer === this.playerCards.length - 1) {
+            this.endGame();
+        }
+    }
+
+    endGame() {
+        let beatScore = this.calcScore(this.currentPlayer);
+        // stand on 17, hit on 16 or less
+        while (beatScore < 17) {
+            this.playerCards[this.currentPlayer].push(this.deck.pop());
+            beatScore = this.calcScore(this.currentPlayer);
+        }
+        for (let i = 0; i < this.playerCards.length - 1; i++) {
+            let playerScore = this.calcScore(i);
+            if (playerScore <= 21 && playerScore > beatScore) {
+                this.playerCards[i] = 'Win';
+            } else if (playerScore <= 21 && playerScore === beatScore) {
+                this.playercards[i] = 'Draw';
+            } else if (playerScore > 21) {
+                this.playerCards[i] = 'Lose';
+            } else if (beatScore > 22) {
+                this.playerCards[i] = 'Win';
+            }
+        }
+        console.log(this.playerCards);
+        this.inProgress = false;
     }
 
     calcScore(player) {
@@ -103,11 +119,6 @@ class Game {
         if (score > 21 && ace) {
             score -= 10;
         }
-
-        console.log(this.playerCards[player], score);
+        return score;
     };
 }
-
-let game = new Game(3);
-game.startGame();
-game.calcScore(1);
