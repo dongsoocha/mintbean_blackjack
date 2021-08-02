@@ -7,6 +7,7 @@ import ChatIcon from '@material-ui/icons/Chat';
 import Player from '../components/Player';
 import Dealer from '../components/Dealer';
 import Chat from '../components/Chat';
+import ExitButton from '../components/ExitButton';
 
 const fakeGame = {
     players: [{
@@ -54,7 +55,6 @@ const useStyles = makeStyles((theme) => ({
         border: '2px solid #ffc400',
         borderRadius: '10px',
         textAlign: 'center',
-        background: 'rgb(33,33,33)',
         background: 'radial-gradient(circle, rgba(33,33,33,1) 0%, rgba(25,25,25,1) 35%, rgba(0,0,0,1) 100%)',
         minHeight: '80vh',
         maxHeight: '90%',
@@ -155,23 +155,7 @@ const useStyles = makeStyles((theme) => ({
             maxHeight: 'none',
         },
     },
-    exit: {
-        position: 'absolute',
-        zIndex: '1',
-        height: '72px',
-        width: '72px',
-        display: 'flex',
-        justifyContent: 'center',
-        alignItems: 'center',
-        '&:hover': {
-            filter: 'dropShadow(0 0 10px #FF0000)',
-            backgroundColor: 'rgb(255,196,0,0.1)'
-        },
-        [theme.breakpoints.down('xs')]: {
-            transform: 'translate(-40px, -30px)',
-        },
-    },
-    exitIcon: {
+    icon: {
         width: "36px",
         height: '36px',
         color: '#ffc400',
@@ -181,8 +165,15 @@ const useStyles = makeStyles((theme) => ({
             height: '40px',
         }
     },
-    shiftLeft: {
-        transform: 'translateX(-5px)'
+    exit: {
+        position: 'absolute',
+        zIndex: '1',
+        display: 'flex',
+        justifyContent: 'center',
+        alignItems: 'center',
+        [theme.breakpoints.down('xs')]: {
+            transform: 'translate(-40px, -30px)',
+        },
     },
     chat: {
         position: 'absolute',
@@ -233,7 +224,7 @@ const useStyles = makeStyles((theme) => ({
             backgroundColor: '#424242',
             borderRadius: '10px'
         },
-    }
+    },
 }))
 
 const Table = () => {
@@ -303,15 +294,12 @@ const Table = () => {
     return (
         <div className={classes.outer}>
             <div className={classes.container}>
-                <IconButton className={classes.exit} onClick={leaveRoom}>
-                    <div>
-                        <img src={`${process.env.PUBLIC_URL}/assets/icon/exit.png`} alt="exit" className={classes.exitIcon} />
-                        <Typography variant="body2" className={classes.gold + " " + classes.shiftLeft}>Exit</Typography>
-                    </div>
-                </IconButton>
+                <Box className={classes.exit} >
+                    <ExitButton />
+                </Box>
                 <IconButton className={classes.chat + (showChatSmallScreen ? ` ${classes.shiftUpRight}` : "")} onClick={toggleChatSmallScreen}>
                     <div>
-                        <ChatIcon className={classes.exitIcon} />
+                        <ChatIcon className={classes.icon} />
                         <Typography variant="body2" className={classes.gold}>Chat</Typography>
                     </div>
                 </IconButton>

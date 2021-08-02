@@ -8,6 +8,7 @@ import Test from "./pages/Test";
 import Home from "./pages/Home";
 import Chat from "./components/Chat";
 import Table from "./pages/Table";
+import Store from "./pages/Store";
 
 import { UserProvider } from "./contextProvider/user";
 
@@ -27,6 +28,7 @@ function App() {
               <Route path="/home" exact component={Home} />
               <Route path="/table" exact component={Table} />
               <Route path="/chat" component={Chat} />
+              <Route path="/store" exact component={Store} />
             </BrowserRouter>
           </SocketContext.Provider>
         </UserProvider>

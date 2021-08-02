@@ -11,7 +11,7 @@ const useStyles = makeStyles((theme) => ({
         justifyContent: 'center',
         alignItems: 'center',
         [theme.breakpoints.down('sm')]: {
-            flexDirection: 'row',
+            flexDirection: 'row-reverse',
             justifyContent: 'space-between',
             minWidth: '50vw',
             borderBottom: '2px solid #ffc400'
@@ -101,7 +101,7 @@ const Player = (props) => {
             </Box>
             <Divider className={classes.divider} />
             <Typography variant="h5" className={classes.gold}>{props.name}</Typography>
-            <Avatar src={avatarMap[props.avatar]} alt="avatar" className={classes.avatar} />
+            <Avatar src={avatarMap[props.avatar].src} alt="avatar" className={classes.avatar} />
         </div>
     );
 }

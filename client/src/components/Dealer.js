@@ -52,7 +52,7 @@ const Dealer = (props) => {
             </Box>
             <Box m={3}>
                 <div className={classes.inner}>
-                    <Avatar src={avatarMap[props.dealer.avatar]} alt="avatar" className={classes.large} />
+                    <Avatar src={avatarMap[props.dealer.avatar].src} alt="avatar" className={classes.large} />
                     <Typography variant="h5" className={classes.gold}>{props.dealer.name}</Typography>
                     <Divider className={classes.divider} />
                     <Box m={1}>

@@ -15,7 +15,6 @@ const useStyles = makeStyles((theme) => ({
     border: '2px solid #ffc400',
     borderRadius: '10px',
     textAlign: 'center',
-    background: 'rgb(33,33,33)',
     background: 'radial-gradient(circle, rgba(33,33,33,1) 0%, rgba(25,25,25,1) 35%, rgba(0,0,0,1) 100%)',
     minHeight: '80vh',
     justifyContent: 'center',
