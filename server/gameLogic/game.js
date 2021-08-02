@@ -2,8 +2,8 @@ const Deck = require('./deck.js');
 const readline = require('readline');
 
 class Game {
-    constructor(player) {
-        this.players = [players];
+    constructor() {
+        this.players = [];
         this.playerCards = new Array();
         for (let i = 1; i <= players.length + 1; i++) {
             this.playerCards.push([]);
@@ -28,15 +28,19 @@ class Game {
         for (let i = 0; i < this.players.length; i++) {
             state.push({
                 name: this.players[i].username,
-                card: this.playerCards[i],
+                hand: this.playerCards[i],
+                avatar: this.players[i].avatar,
+                cardBack: 'a0',
             })
         }
         state.push({
             name: 'dealer',
-            card: this.playerCards[this.playerCards.length - 1],
+            hand: this.playerCards[this.playerCards.length - 1],
             avatar: 'a0',
             cardBack: 'a0',
-        })
+        });
+
+        return state;
     }
 
     startGame() {
