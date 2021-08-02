@@ -2,27 +2,97 @@ const Deck = require('./deck.js');
 const readline = require('readline');
 
 class Game {
-    constructor(players) {
-        this.players = players;
+    constructor(player) {
+        this.players = [players];
         this.playerCards = new Array();
         for (let i = 1; i <= players.length + 1; i++) {
             this.playerCards.push([]);
         }
-        this.inProgress = true;
+        this.waiting = [];
+        this.leaving = [];
+        this.inProgress = false;
         this.currentPlayer = 0;
         this.deck = new Deck();
         this.startGame = this.startGame.bind(this);
         this.hit = this.hit.bind(this);
         this.stand = this.stand.bind(this);
         this.endGame = this.endGame.bind(this);
+        this.restartGame = this.restartGame.bind(this);
+        this.addPlayer = this.addPlayer.bind(this);
+        this.removePlayer = this.removePlayer.bind(this);
+        this.getState = this.getState.bind(this);
+    }
+
+    getState() {
+        let state = [];
+        for (let i = 0; i < this.players.length; i++) {
+            state.push({
+                name: this.players[i].username,
+                card: this.playerCards[i],
+            })
+        }
+        state.push({
+            name: 'dealer',
+            card: this.playerCards[this.playerCards.length - 1],
+            avatar: 'a0',
+            cardBack: 'a0',
+        })
     }
 
     startGame() {
+        this.inProgress = true;
         for (let playerCard of this.playerCards) {
             playerCard.push(this.deck.pop());
         }
         for (let playerCard of this.playerCards) {
             playerCard.push(this.deck.pop());
+        }
+    }
+
+    restartGame() {
+        //handle leavers
+        while (this.leaving) {
+            let player = this.leaving.pop();
+            this.removePlayer(player);
+        }
+        //handle joiners up to player size 7
+        while (this.players.length < 7 && this.waiting) {
+            let player = this.waiting.shift();
+            this.addPlayer(player);
+        }
+
+        //reset deck
+        this.deck = new Deck();
+
+        //reset playercards
+        this.playerCards = new Array();
+        for (let i = 1; i <= players.length + 1; i++) {
+            this.playerCards.push([]);
+        }
+    }
+
+    addPlayer(player) {
+        // if players are full or game is going on, add to waiting list
+        if (this.players.length === 7 || this.inProgress) {
+            this.waiting.push(player);
+        } else {
+            this.players.push(player);
+        }
+    }
+
+    removePlayer(player) {
+        let newPlayers;
+        if (this.inProgress) {
+            this.leaving.push(player);
+        } else {
+            for (let i = 0; i < this.players.length; i++) {
+                let user = this.players[i];
+                if (user.username === player.username) {
+                    newPlayers = this.players.slice(0, i).concat(this.players.slice(i + 1, this.players.length));
+                    break;
+                }
+            }
+            this.players = newPlayers;
         }
     }
 
@@ -35,7 +105,6 @@ class Game {
                 this.endGame();
             }
         }
-        console.log(score);
     }
 
     stand() {
