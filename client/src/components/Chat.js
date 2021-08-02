@@ -137,7 +137,7 @@ const PartnerRow = styled(MyRow)`
 
 const PartnerMessage = styled.div`
   width: 45%;
-  background-color: #ffc400;
+  background-color: transparent;
   color: lightgray;
   border: 1px solid #ffc400;
   padding: 10px;
