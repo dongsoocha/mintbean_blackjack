@@ -181,7 +181,7 @@ const Chat = (props) => {
     })
 
     socket.on("message", ({ messageObject }) => {
-      console.log("here");
+      // console.log("here");
       receivedMessage(messageObject);
     })
   }, []);

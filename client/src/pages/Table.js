@@ -1,4 +1,4 @@
-import React, { useEffect, useState, useContext } from 'react';
+import React, { useEffect, useState, useContext, useRef } from 'react';
 import { useHistory } from 'react-router-dom';
 import { useUserContext, useUserUpdateContext } from '../contextProvider/user';
 import { SocketContext } from '../contextProvider/socket';
@@ -8,40 +8,7 @@ import Player from '../components/Player';
 import Dealer from '../components/Dealer';
 import Chat from '../components/Chat';
 import ExitButton from '../components/ExitButton';
-
-const fakeGame = {
-    players: [{
-        name: 'Dealer',
-        hand: [{ val: '3', suit: 'D', id: '3D' },
-        { val: '7', suit: 'S', id: '7S' },],
-        avatar: 'a0',
-        cardBack: 'a0'
-    },
-    {
-        name: 'Chris',
-        hand: [{ val: 'K', suit: 'C', id: 'KC' },
-        { val: 'J', suit: 'S', id: 'JS' }],
-        avatar: 'a0',
-        cardBack: 'a0'
-    },
-    {
-        name: 'Dongsoo',
-        hand: [{ val: 'A', suit: 'C', id: 'AC' },
-        { val: 'Q', suit: 'C', id: 'QC' },
-        { val: '8', suit: 'H', id: '8H' }],
-        avatar: 'a0',
-        cardBack: 'a0'
-    },
-    {
-        name: 'Fred',
-        hand: [{ val: '2', suit: 'D', id: '2D' },
-        { val: '5', suit: 'H', id: '5H' }],
-        avatar: 'a0',
-        cardBack: 'a0'
-    },],
-    currentPlayer: 1,
-
-}
+import Countdown from 'react-countdown';
 
 const useStyles = makeStyles((theme) => ({
     container: {
@@ -232,17 +199,13 @@ const Table = () => {
     const [gameState, setGameState] = useState(null) // Temp game
     const [showChatSmallScreen, setShowChatSmallScreen] = useState(false)
     const userState = useUserContext();
-    const setUserState = useUserUpdateContext();
     const classes = useStyles();
     const socket = useContext(SocketContext);
     const history = useHistory();
-    const [clientTurn, setClientTurn] = useState(false) // State for if it is the client's turn
+    const startDate = useRef(Date.now());
 
     useEffect(() => {
-        // TODO: On mount retrieve game state from socket
-        // TODO: Check for emitions for updating game state
         if (!gameState) {
-            console.log(userState.username)
             socket.emit('join-room', {
                 player: {
                     name: userState.username,
@@ -253,26 +216,48 @@ const Table = () => {
             })
         }
         socket.on('update-game-state', (game) => {
-            console.log(game)
+            // console.log(game)
             setGameState(game);
         });
-        return () => socket.off('update-game-state');
+        // socket.on('update-timer', () => {
+        //     //console.log("Updating timer")
+        //     console.log("ccc")
+        //     console.log(gameState)
+        //     startDate.current = Date.now()
+        // });
+        // socket.on('update-game-state-and-timer', (game) => {
+        //     //console.log("Updating timer")
+        //     console.log(game)
+        //     console.log(gameState)
+        //     startDate.current = Date.now()
+        //     setGameState(game);
+        // });
+        // socket.on(`force-player-to-stand-${userState.username}`, () => {
+        //     console.log(userState.username)
+        //     stand()
+        // });
+        return () => {
+            socket.emit('leave-room', {
+                player: {
+                    name: userState.username,
+                    hand: [],
+                    avatar: userState.avatar,
+                    cardBack: 'a0'
+                }
+            })
+            socket.removeAllListeners()
+        }
     }, [])
 
-    const playerMove = (move) => {
-        // TODO: move will be a string for hit/stand, then pass that into the socket to emit
-    }
-
-    // TODO: Have a MUI modal with buttons for hit/stand. Modal is active if clientTurn is true 
-    // TODO: Have text somewhere indicating who's turn it is.
     // TODO: Spectator list? Text indicating a new person joined the table / room.
 
-    // Components that will be used here:
-    // Players will get mapped around the table (try to space evenly)
-    // Players will have card components as children
-    // Chat component will be on the side?
-
     const renderTurn = () => {
+
+        if (!gameState.inProgress) {
+            return <Typography variant="h5" className={classes.gold + " " + classes.name}>Game Over! <Button variant="contained" className={classes.buttonGreen} onClick={restart}>Restart</Button></Typography>
+
+        }
+
         return gameState.players[gameState.currentPlayer].name === userState.username ? <div className={classes.row2}>
             <Typography variant="h5" className={classes.gold} > Your Turn:</Typography>
             <Box display="inline" component="div" m={1} p={1}>
@@ -282,7 +267,7 @@ const Table = () => {
             </Box>
             <Typography variant="h5" className={classes.gold}>or</Typography>
             <Box display="inline" component="div" m={1} p={1}>
-                <Button variant="contained" className={classes.buttonRed}>
+                <Button variant="contained" className={classes.buttonRed} onClick={stand}>
                     Stand
                 </Button>
             </Box>
@@ -290,6 +275,16 @@ const Table = () => {
             :
             <Typography variant="h5" className={classes.gold + " " + classes.name}>It is currently {gameState.players[gameState.currentPlayer].name}'s turn.</Typography>
     }
+
+    const countDownRender = ({ seconds, completed }) => {
+        if (completed) {
+            // Render a completed state
+            return null
+        } else {
+            // Render a countdown
+            return <Typography variant="h5" className={classes.gold} display="inline">{seconds}s</Typography>;
+        }
+    };
 
     const test1 = () => {
         socket.emit("start-game")
@@ -303,16 +298,12 @@ const Table = () => {
         socket.emit("hit")
     }
 
+    const stand = () => {
+        socket.emit("stand")
+    }
+
     const leaveRoom = () => {
         // TODO: Remove player from the game
-        socket.emit('leave-room', {
-            player: {
-                name: userState.username,
-                hand: [],
-                avatar: userState.avatar,
-                cardBack: 'a0'
-            }
-        })
         history.push("/home")
     }
 
@@ -335,13 +326,11 @@ const Table = () => {
                 <div className={classes.inner}>
                     <div className={classes.row}>
                         <div className={classes.dealer}>
-                            {gameState && <Dealer dealer={gameState.players[gameState.players.length - 1]} size={gameState.deckSize} />}
+                            {gameState && <Dealer dealer={gameState.players[gameState.players.length - 1]} deckSize={gameState.deckSize} inProgress={gameState.inProgress} />}
                         </div>
                     </div>
                     <div className={classes.turn}>
                         {gameState && renderTurn()}
-                        <Button variant="contained" onClick={test1}>Test</Button>
-                        <Button variant="contained" onClick={restart}>Restart</Button>
                     </div>
                     <div className={classes.row + " " + classes.players}>
                         {gameState && gameState.players.slice(0, gameState.players.length - 1).map(player =>

@@ -57,22 +57,24 @@ const Dealer = (props) => {
                     <Divider className={classes.divider} />
                     <Box m={1}>
                         <div className={classes.row}>
-                            {props.dealer.hand && props.dealer.hand.slice(0, handSize - 1).map(card => <Card
+                            {props.dealer.hand.length > 0 &&
+                                <Card
+                                    key={props.dealer.hand[0].id}
+                                    val={props.dealer.hand[0].val}
+                                    suit={props.dealer.hand[0].suit}
+                                    id={props.dealer.hand[0].id}
+                                    user={userState.username}
+                                    back={props.dealer.cardBack}
+                                    hidden={props.inProgress} />
+                            }
+                            {props.dealer.hand && props.dealer.hand.slice(1).map(card => <Card
                                 key={card.id}
                                 val={card.val}
                                 suit={card.suit}
                                 id={card.id}
                                 user={props.dealer.name}
                                 back={props.dealer.cardBack} />)}
-                            {props.dealer.hand.length > 0 &&
-                                <Card
-                                    key={props.dealer.hand[handSize - 1].id}
-                                    val={props.dealer.hand[handSize - 1].val}
-                                    suit={props.dealer.hand[handSize - 1].suit}
-                                    id={props.dealer.hand[handSize - 1].id}
-                                    user={userState.username}
-                                    back={props.dealer.cardBack} />
-                            }
+
                         </div>
                     </Box>
                 </div>
