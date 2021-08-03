@@ -8,26 +8,30 @@ Table of Contents
 * [About](#about)
 * [Tech Stack](#tech-stack)
 
-## Preview
+# Preview
 
-This project is currently live at https://mintjack.herokuapp.com/
+This project is currently live at https://mintjack.herokuapp.com/   
+Web View:
 ![web](https://github.com/dongsoocha/mintbean_blackjack/blob/main/client/public/assets/imgs/web_screen.png)
+
+Mobile View:  
 ![mobile](https://github.com/dongsoocha/mintbean_blackjack/blob/main/client/public/assets/imgs/mobile_screen.png)
 
-## About
+# About
 
 MintJack is a BlackJack application intended to give users the experience of a real life casino. 
 Users can join and leave the BlackJack table at will without affecting the flow of the game, 
 and a chat built using Socket.io provides real-time messaging amongst players. Players can
-choose an avatar to best represent them, and rapid dealing of hands ensures a nice pace to the m
-game. 
+choose an avatar to best represent them, and rapid dealing of hands ensures a nice pace to the
+game. The app is responsive to a variety of screen sizes and will persist the login state through
+page refereshes.
 
-## Tech Stack
+# Tech Stack
 
-MERN (Mongo, Express, React, Node)
+MERN (MongoDB, Express, React, Node)
 
 | Other Highlights |
 | :--------------: |
-|      Redux       |
+|    Socket.io     |
 |   MDBootstrap    |
 |      Auth0       |
