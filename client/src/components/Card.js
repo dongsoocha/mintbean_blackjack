@@ -33,7 +33,7 @@ const Card = (props) => {
 
     return (
         <div className={classes.container}>
-            <img src={process.env.PUBLIC_URL + `/assets/deck/${userState.username === props.user ? props.id : props.back}.png`} className={classes.card} />
+            <img src={process.env.PUBLIC_URL + `/assets/deck/${props.hidden ? props.back : props.id}.png`} className={classes.card} />
         </div>
     );
 }
