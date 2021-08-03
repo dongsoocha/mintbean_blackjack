@@ -11,8 +11,8 @@ Table of Contents
 ## Preview
 
 This project is currently live at https://mintjack.herokuapp.com/
-[!web](https://github.com/dongsoocha/mintbean_blackjack/client/public/assets/imgs/web_screen.png)
-[!mobile](https://github.com/dongsoocha/mintbean_blackjack/client/public/assets/imgs/mobile_screen.png)
+[!web](https://github.com/dongsoocha/mintbean_blackjack/blob/main/client/public/assets/imgs/web_screen.png)
+[!mobile](https://github.com/dongsoocha/mintbean_blackjack/blob/main/client/public/assets/imgs/mobile_screen.png)
 
 ## About
 
