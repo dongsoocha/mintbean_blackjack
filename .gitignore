@@ -22,6 +22,7 @@ yarn-debug.log*
 yarn-error.log*
 /config/keys.js
 /server/config/keys.js
+/server/config/keys_dev.js
 /node_modules
 
 #TODO add .env to your gitignore
