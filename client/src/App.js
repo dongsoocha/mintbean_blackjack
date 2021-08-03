@@ -27,10 +27,10 @@ function App() {
               <Route path="/" exact component={LandingPage} />
               <Route path="/test" component={Test} />
               <Route path="/howtoplay" component={HowToPlay} />
-              <Route path="/home" exact component={Home} />
-              <Route path="/table" exact component={Table} />
+              <Route path="/home"  component={Home} />
+              <Route path="/table"  component={Table} />
               <Route path="/chat" component={Chat} />
-              <Route path="/store" exact component={Store} />
+              <Route path="/store"  component={Store} />
             </BrowserRouter>
           </SocketContext.Provider>
         </UserProvider>
