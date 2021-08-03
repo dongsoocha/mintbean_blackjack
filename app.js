@@ -9,6 +9,8 @@ const cookieParser = require('cookie-parser');
 const socketConn = require('./server/socket');
 const path = require('path');
 
+
+const port = process.env.PORT || 5000;
 // if (process.env.NODE_ENV === 'production') {
     app.use(express.static('client/build'));
 
@@ -29,13 +31,13 @@ app.use(express.json());
 
 //var http = require("http");
 //var server = http.createServer(app);
-socketConn.socketConnect();
+socketConn.socketConnect(3001);
 
 app.use(passport.initialize());
 require('./server/config/passport')(passport);
 app.use("/api/users", users);
 
 
-const port = process.env.PORT || 5000;
+// const port = process.env.PORT || 5000;
 
 app.listen(port, () => console.log(`Server is running on port ${[port]}`));
