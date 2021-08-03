@@ -69,13 +69,12 @@ app.use(express.json());
 
 //var http = require("http");
 //var server = http.createServer(app);
+socketConn.socketConnect(3001);
 
 app.use(passport.initialize());
 require("./server/config/passport")(passport);
 app.use("/api/users", users);
-socketConn.socketConnect(3001);
+
 const port = process.env.PORT || 5000;
 
 app.listen(port, () => console.log(`Server is running on port ${[port]}`));
-
-
