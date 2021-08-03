@@ -3,9 +3,14 @@ const readline = require('readline');
 
 class Game {
     constructor() {
-        this.players = [];
+        this.players = [{
+            name: 'Dealer',
+            hand: [],
+            avatar: 'a0',
+            cardBack: 'a0',
+        }];
         this.playerCards = new Array();
-        for (let i = 1; i <= players.length + 1; i++) {
+        for (let i = 1; i <= this.players.length; i++) {
             this.playerCards.push([]);
         }
         this.waiting = [];
@@ -26,24 +31,18 @@ class Game {
     getState() {
         let state = {
             players: [],
-            current: this.currentPlayer,
-            size: this.deck.length,
+            currentPlayer: this.currentPlayer,
+            deckSize: this.deck.cards.length,
         };
         for (let i = 0; i < this.players.length; i++) {
             state.players.push({
-                name: this.players[i].username,
+                name: this.players[i].name,
                 hand: this.playerCards[i],
                 avatar: this.players[i].avatar,
                 cardBack: 'a0',
+                result: this.players[i].result
             })
         }
-        state.players.push({
-            name: 'dealer',
-            hand: this.playerCards[this.playerCards.length - 1],
-            avatar: 'a0',
-            cardBack: 'a0',
-        });
-
         return state;
     }
 
@@ -58,25 +57,40 @@ class Game {
     }
 
     restartGame() {
+        if (this.inProgress) { return }
+        console.log("3473429782347239874")
+        for (let i = 0; i < this.playerCards.length - 1; i++) {
+            this.players[i].result = '';
+        }
+        this.currentPlayer = 0;
         //handle leavers
-        while (this.leaving) {
+        while (this.leaving.length) {
             let player = this.leaving.pop();
             this.removePlayer(player);
         }
         //handle joiners up to player size 7
-        while (this.players.length < 7 && this.waiting) {
+        while (this.players.length < 7 && this.waiting.length) {
             let player = this.waiting.shift();
             this.addPlayer(player);
         }
-
+        //console.log("middle")
         //reset deck
         this.deck = new Deck();
 
         //reset playercards
         this.playerCards = new Array();
-        for (let i = 1; i <= players.length + 1; i++) {
+        for (let i = 1; i <= this.players.length; i++) {
             this.playerCards.push([]);
         }
+        for (let playerCard of this.playerCards) {
+            console.log("sending 1 card")
+            playerCard.push(this.deck.pop());
+        }
+        for (let playerCard of this.playerCards) {
+            playerCard.push(this.deck.pop());
+        }
+        this.inProgress = true;
+        //console.log("end")
     }
 
     addPlayer(player) {
@@ -84,7 +98,12 @@ class Game {
         if (this.players.length === 7 || this.inProgress) {
             this.waiting.push(player);
         } else {
-            this.players.push(player);
+            let newPlayer = this.players.slice(0, this.players.length - 1).concat([player]).concat([this.players[this.players.length - 1]])
+            //this.players.unshift(player);
+            this.players = newPlayer
+            this.playerCards.unshift([]);
+            this.restartGame()
+
         }
     }
 
@@ -95,7 +114,7 @@ class Game {
         } else {
             for (let i = 0; i < this.players.length; i++) {
                 let user = this.players[i];
-                if (user.username === player.username) {
+                if (user.name === player.name) {
                     newPlayers = this.players.slice(0, i).concat(this.players.slice(i + 1, this.players.length));
                     break;
                 }
@@ -107,8 +126,9 @@ class Game {
     hit() {
         this.playerCards[this.currentPlayer].push(this.deck.pop());
         let score = this.calcScore(this.currentPlayer);
+        console.log(score)
         if (score >= 21) {
-            this.currentPlayer++;
+            if (this.currentPlayer < this.playerCards.length - 1) { this.currentPlayer++; }
             if (this.currentPlayer === this.playerCards.length - 1) {
                 this.endGame();
             }
@@ -116,7 +136,7 @@ class Game {
     }
 
     stand() {
-        this.currentPlayer++;
+        if (this.currentPlayer < this.playerCards.length - 1) { this.currentPlayer++; }
         if (this.currentPlayer === this.playerCards.length - 1) {
             this.endGame();
         }
@@ -132,13 +152,15 @@ class Game {
         for (let i = 0; i < this.playerCards.length - 1; i++) {
             let playerScore = this.calcScore(i);
             if (playerScore <= 21 && playerScore > beatScore) {
-                this.playerCards[i] = 'Win';
+                this.players[i].result = 'Win';
             } else if (playerScore <= 21 && playerScore === beatScore) {
-                this.playercards[i] = 'Draw';
+                this.players[i].result = 'Draw';
+            } else if (beatScore <= 21 && playerScore < beatScore) {
+                this.players[i].result = 'Lose';
             } else if (playerScore > 21) {
-                this.playerCards[i] = 'Lose';
+                this.players[i].result = 'Lose';
             } else if (beatScore > 22) {
-                this.playerCards[i] = 'Win';
+                this.players[i].result = 'Win';
             }
         }
         console.log(this.playerCards);
@@ -150,8 +172,8 @@ class Game {
         let ace = false;
         this.playerCards[player].forEach(card => {
             let value = card.val;
-            switch (value){
-                case '1':
+            switch (value) {
+                case 'A':
                     ace = true;
                     score += 11;
                     break;
@@ -199,3 +221,4 @@ class Game {
         return score;
     };
 }
+module.exports = Game;

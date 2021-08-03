@@ -18,8 +18,8 @@ const initialState = {
     email: '',
     currentMatchId: '',
     balance: 0,
-    avatar: '',
-    cardBack: '',
+    avatar: 'a0',
+    cardBack: 'a0',
 }
 
 const UserProvider = ({ children }) => {

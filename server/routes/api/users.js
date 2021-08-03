@@ -129,6 +129,41 @@ router.post("/login", (req, res) => {
 
 // })
 
+router.get('/get-owned-avatars', (req, res) => {
+  User.findOne({ email: req.query.email })
+    .then((user) => res.json(user))
+    .catch((err) => res.status(400).json("Error: " + err));
+})
+
+router.post('/purchase-avatar', (req, res) => {
+  User.findOne({ email: req.body.email })
+    .then(user => {
+      user.cashBalance -= req.body.cost
+      user.avatar.owned.push(req.body.id)
+
+      const payload = { id: user.id, username: user.username, email: user.email, balance: user.cashBalance, avatar: user.avatar.current, cardBack: user.cardBack.current }
+
+      user
+        .save()
+        .then(() => res.json({ payload }))
+        .catch((err) => res.status(400).json("Error: " + err))
+    })
+})
+
+router.post('/recharge', (req, res) => {
+  User.findOne({ email: req.body.email })
+    .then(user => {
+      user.cashBalance = 500
+
+      const payload = { id: user.id, username: user.username, email: user.email, balance: user.cashBalance, avatar: user.avatar.current, cardBack: user.cardBack.current }
+
+      user
+        .save()
+        .then(() => res.json({ payload }))
+        .catch((err) => res.status(400).json("Error: " + err))
+    })
+})
+
 
 
 
