@@ -57,7 +57,8 @@ class Game {
     }
 
     restartGame() {
-
+        if (this.inProgress) { return }
+        console.log("3473429782347239874")
         for (let i = 0; i < this.playerCards.length - 1; i++) {
             this.players[i].result = '';
         }
@@ -72,7 +73,7 @@ class Game {
             let player = this.waiting.shift();
             this.addPlayer(player);
         }
-
+        //console.log("middle")
         //reset deck
         this.deck = new Deck();
 
@@ -82,11 +83,14 @@ class Game {
             this.playerCards.push([]);
         }
         for (let playerCard of this.playerCards) {
+            console.log("sending 1 card")
             playerCard.push(this.deck.pop());
         }
         for (let playerCard of this.playerCards) {
             playerCard.push(this.deck.pop());
         }
+        this.inProgress = true;
+        //console.log("end")
     }
 
     addPlayer(player) {
@@ -98,6 +102,8 @@ class Game {
             //this.players.unshift(player);
             this.players = newPlayer
             this.playerCards.unshift([]);
+            this.restartGame()
+
         }
     }
 
@@ -130,7 +136,7 @@ class Game {
     }
 
     stand() {
-        this.currentPlayer++;
+        if (this.currentPlayer < this.playerCards.length - 1) { this.currentPlayer++; }
         if (this.currentPlayer === this.playerCards.length - 1) {
             this.endGame();
         }
@@ -149,6 +155,8 @@ class Game {
                 this.players[i].result = 'Win';
             } else if (playerScore <= 21 && playerScore === beatScore) {
                 this.players[i].result = 'Draw';
+            } else if (beatScore <= 21 && playerScore < beatScore) {
+                this.players[i].result = 'Lose';
             } else if (playerScore > 21) {
                 this.players[i].result = 'Lose';
             } else if (beatScore > 22) {

@@ -282,7 +282,7 @@ const Table = () => {
             </Box>
             <Typography variant="h5" className={classes.gold}>or</Typography>
             <Box display="inline" component="div" m={1} p={1}>
-                <Button variant="contained" className={classes.buttonRed}>
+                <Button variant="contained" className={classes.buttonRed} onClick={stand}>
                     Stand
                 </Button>
             </Box>
@@ -301,6 +301,10 @@ const Table = () => {
 
     const hit = () => {
         socket.emit("hit")
+    }
+
+    const stand = () => {
+        socket.emit("stand")
     }
 
     const leaveRoom = () => {
@@ -335,7 +339,7 @@ const Table = () => {
                 <div className={classes.inner}>
                     <div className={classes.row}>
                         <div className={classes.dealer}>
-                            {gameState && <Dealer dealer={gameState.players[gameState.players.length - 1]} size={gameState.deckSize} />}
+                            {gameState && <Dealer dealer={gameState.players[gameState.players.length - 1]} deckSize={gameState.deckSize} />}
                         </div>
                     </div>
                     <div className={classes.turn}>

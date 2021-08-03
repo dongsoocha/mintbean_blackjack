@@ -20,8 +20,8 @@ exports.socketConnect = function (server) {
             io.emit("message", { messageObject })
         })
 
-        socket.on("join-room", ({ player }) => {
-            game1.addPlayer(player)
+        socket.on("join-room", async ({ player }) => {
+            await game1.addPlayer(player)
             io.emit("update-game-state", game1.getState())
         })
 
