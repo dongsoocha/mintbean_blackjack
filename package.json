@@ -2,7 +2,7 @@
   "name": "mintbean_poker",
   "version": "1.0.0",
   "description": "MintBean hiring hackathon, 7/27/21-8/3/21",
-  "main": "app.js",
+  "main": "server/app.js",
   "scripts": {
     "start": "node app.js",
     "server": "nodemon app.js",
