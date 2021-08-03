@@ -20,7 +20,7 @@ const path = require('path');
 mongoose
     .connect(db, { useNewUrlParser: true })
     .then(() => console.log("Connected to MongoDB successfully"))
-    .catch(err => console.log(err));
+    .catch(err => console.log('error'));
 
 app.use(express.urlencoded({ extended: false }));
 app.use(cors());
