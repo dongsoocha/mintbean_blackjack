@@ -29,9 +29,3 @@ page refereshes.
 # Tech Stack
 
 MERN (MongoDB, Express, React, Node)
-
-| Other Highlights |
-| :--------------: |
-|    Socket.io     |
-|   MDBootstrap    |
-|      Auth0       |
