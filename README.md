@@ -7,6 +7,7 @@ Table of Contents
 * [Preview](#preview)
 * [About](#about)
 * [Tech Stack](#tech-stack)
+* [Team](#team)
 
 # Preview
 
@@ -29,3 +30,9 @@ page refereshes.
 # Tech Stack
 
 MERN (MongoDB, Express, React, Node)
+
+# Team
+
+Alfredo Arriola Jr: https://github.com/alfredoarriolajr
+Chris Simbulan: https://github.com/CSimbulan
+Dongsoo Cha: https://github.com/dongsoocha
