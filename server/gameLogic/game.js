@@ -33,6 +33,7 @@ class Game {
             players: [],
             currentPlayer: this.currentPlayer,
             deckSize: this.deck.cards.length,
+            inProgress: this.inProgress
         };
         for (let i = 0; i < this.players.length; i++) {
             state.players.push({
@@ -40,7 +41,7 @@ class Game {
                 hand: this.playerCards[i],
                 avatar: this.players[i].avatar,
                 cardBack: 'a0',
-                result: this.players[i].result
+                result: this.players[i].result,
             })
         }
         return state;
@@ -58,9 +59,8 @@ class Game {
 
     restartGame() {
         if (this.inProgress) { return }
-        console.log("3473429782347239874")
         for (let i = 0; i < this.playerCards.length - 1; i++) {
-            this.players[i].result = '';
+            if (this.players[i]) { this.players[i].result = ''; }
         }
         this.currentPlayer = 0;
         //handle leavers
@@ -73,7 +73,6 @@ class Game {
             let player = this.waiting.shift();
             this.addPlayer(player);
         }
-        //console.log("middle")
         //reset deck
         this.deck = new Deck();
 
@@ -83,27 +82,28 @@ class Game {
             this.playerCards.push([]);
         }
         for (let playerCard of this.playerCards) {
-            console.log("sending 1 card")
             playerCard.push(this.deck.pop());
         }
         for (let playerCard of this.playerCards) {
             playerCard.push(this.deck.pop());
         }
-        this.inProgress = true;
-        //console.log("end")
+        if (this.players.length > 1) { this.inProgress = true; }
     }
 
     addPlayer(player) {
         // if players are full or game is going on, add to waiting list
         if (this.players.length === 7 || this.inProgress) {
             this.waiting.push(player);
+            this.leaving = this.leaving.filter(p => { return p.name !== player.name })
         } else {
+            this.players = this.players.filter(p => { return p.name !== player.name })
             let newPlayer = this.players.slice(0, this.players.length - 1).concat([player]).concat([this.players[this.players.length - 1]])
             //this.players.unshift(player);
             this.players = newPlayer
             this.playerCards.unshift([]);
-            this.restartGame()
-
+            if (this.players.length === 2) {
+                this.restartGame()
+            }
         }
     }
 
@@ -111,14 +111,9 @@ class Game {
         let newPlayers;
         if (this.inProgress) {
             this.leaving.push(player);
+            this.waiting = this.waiting.filter(p => { return p.name !== player.name })
         } else {
-            for (let i = 0; i < this.players.length; i++) {
-                let user = this.players[i];
-                if (user.name === player.name) {
-                    newPlayers = this.players.slice(0, i).concat(this.players.slice(i + 1, this.players.length));
-                    break;
-                }
-            }
+            newPlayers = this.players.filter(p => { return p.name !== player.name })
             this.players = newPlayers;
         }
     }
@@ -126,7 +121,6 @@ class Game {
     hit() {
         this.playerCards[this.currentPlayer].push(this.deck.pop());
         let score = this.calcScore(this.currentPlayer);
-        console.log(score)
         if (score >= 21) {
             if (this.currentPlayer < this.playerCards.length - 1) { this.currentPlayer++; }
             if (this.currentPlayer === this.playerCards.length - 1) {
@@ -163,7 +157,7 @@ class Game {
                 this.players[i].result = 'Win';
             }
         }
-        console.log(this.playerCards);
+        this.currentPlayer = 0;
         this.inProgress = false;
     }
 

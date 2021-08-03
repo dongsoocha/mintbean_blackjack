@@ -115,10 +115,6 @@ const Home = () => {
         history.push('/table')
     }
 
-    const reload = () => {
-        // TODO: Give user 500 credits if they hit 0
-    }
-
     const logout = () => {
         // TODO: Properly logout
         setUserState({
