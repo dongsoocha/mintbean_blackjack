@@ -4,8 +4,8 @@
   "description": "MintBean hiring hackathon, 7/27/21-8/3/21",
   "main": "server/app.js",
   "scripts": {
-    "start": "node app.js",
-    "server": "nodemon app.js",
+    "start": "node server/app.js",
+    "server": "nodemon server/app.js",
     "heroku-postbuild": "NPM_CONFIG_PRODUCTION=false npm install --prefix client && npm run build --prefix client"
   },
   "repository": {
