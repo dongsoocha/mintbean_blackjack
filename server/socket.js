@@ -23,12 +23,12 @@ exports.socketConnect = function (server) {
     }
 
     io.on("connection", socket => {
-        socket.on('test1', () => {
-            console.log("testing success")
-        })
+        // socket.on('test1', () => {
+        //     console.log("testing success")
+        // })
 
         socket.on("send message", ({ messageObject }) => {
-            console.log(messageObject.body)
+            // console.log(messageObject.body)
             io.emit("message", { messageObject })
         })
 

@@ -216,7 +216,7 @@ const Table = () => {
             })
         }
         socket.on('update-game-state', (game) => {
-            console.log(game)
+            // console.log(game)
             setGameState(game);
         });
         // socket.on('update-timer', () => {
