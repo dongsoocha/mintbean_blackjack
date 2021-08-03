@@ -112,6 +112,7 @@ class Game {
         let newPlayers;
         if (this.inProgress) {
             this.leaving.push(player);
+            this.checkPlayer();
             this.waiting = this.waiting.filter(p => { return p.name !== player.name })
         } else {
             newPlayers = this.players.filter(p => { return p.name !== player.name })
