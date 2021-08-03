@@ -31,12 +31,15 @@ app.use(express.json());
 //var server = http.createServer(app);
 
 
-app.use(passport.initialize());
-require("./server/config/passport")(passport);
-app.use("/api/users", users);
+// app.use(passport.initialize());
+// require("./server/config/passport")(passport);
+// app.use("/api/users", users);
 
-const port = process.env.PORT || 5000;
+// const port = process.env.PORT || 5000;
 
-socketConn.socketConnect(port);
+// socketConn.socketConnect(port);
 
-app.listen(port, () => console.log(`Server is running on port ${[port]}`));
+// app.listen(port, () => console.log(`Server is running on port ${[port]}`));
+
+const server = http.createServer(app).listen(port);
+socketConn.socketConnect(server);
