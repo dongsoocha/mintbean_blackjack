@@ -254,10 +254,7 @@ const Table = () => {
     const renderTurn = () => {
 
         if (!gameState.inProgress) {
-            return <Typography variant="h5" className={classes.gold + " " + classes.name}>Game Over! Next round starting in <Countdown
-                date={startDate.current + 5000}
-                renderer={countDownRender}
-            /></Typography>
+            return <Typography variant="h5" className={classes.gold + " " + classes.name}>Game Over! <Button variant="contained" className={classes.buttonGreen} onClick={restart}>Restart</Button></Typography>
 
         }
 
@@ -274,10 +271,6 @@ const Table = () => {
                     Stand
                 </Button>
             </Box>
-            <Countdown
-                date={startDate.current + 5000}
-                renderer={countDownRender}
-            />
         </div>
             :
             <Typography variant="h5" className={classes.gold + " " + classes.name}>It is currently {gameState.players[gameState.currentPlayer].name}'s turn.</Typography>
