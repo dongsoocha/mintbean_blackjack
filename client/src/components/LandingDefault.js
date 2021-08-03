@@ -50,9 +50,9 @@ const LandingDefault = (props) => {
                 <Typography variant="h4" className={classes.gold + " " + classes.m20}>Need an account?</Typography>
                 <Button variant="contained" className={classes.landingButton} onClick={() => props.setPage("register")}>Register</Button>
                 <Divider className={classes.divider} />
-                <Typography varaint="body2" className={classes.gold}>
+                {/*<Typography varaint="body2" className={classes.gold}>
                     Don't want to register? <strong className={classes.goldSpan} onClick={() => props.setPage("default")}>Continue as guest.</strong>
-                </Typography>
+    </Typography>*/}
             </div>
         </Fade>
     );
