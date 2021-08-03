@@ -26,6 +26,7 @@ class Game {
         this.addPlayer = this.addPlayer.bind(this);
         this.removePlayer = this.removePlayer.bind(this);
         this.getState = this.getState.bind(this);
+        this.checkPlayer = this.checkPlayer.bind(this);
     }
 
     getState() {
@@ -118,6 +119,18 @@ class Game {
         }
     }
 
+    checkPlayer() {
+        // iterates through leavers
+        for (let leaver of this.leaving) {
+            //check name vs currentplayer name
+            let current = this.players[this.currentPlayer].name;
+            if (leaver.name === current) {
+                this.stand();
+                break;
+            }
+        }
+    }
+
     hit() {
         this.playerCards[this.currentPlayer].push(this.deck.pop());
         let score = this.calcScore(this.currentPlayer);
@@ -125,6 +138,8 @@ class Game {
             if (this.currentPlayer < this.playerCards.length - 1) { this.currentPlayer++; }
             if (this.currentPlayer === this.playerCards.length - 1) {
                 this.endGame();
+            } else {
+                this.checkPlayer();
             }
         }
     }
@@ -133,6 +148,8 @@ class Game {
         if (this.currentPlayer < this.playerCards.length - 1) { this.currentPlayer++; }
         if (this.currentPlayer === this.playerCards.length - 1) {
             this.endGame();
+        } else {
+            this.checkPlayer();
         }
     }
 
