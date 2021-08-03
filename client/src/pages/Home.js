@@ -132,6 +132,7 @@ const Home = () => {
             cardBack: '',
         })
         history.push("/")
+        localStorage.removeItem('token')
     }
 
     useEffect(() => {

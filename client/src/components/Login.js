@@ -99,6 +99,7 @@ const Login = (props) => {
                     setLogInData(initialLogInData)
                     setResponseMsg({ type: 'success', message: 'Log in successful!' })
                     setUserState({ ...res.data.payload, isAuth: true, currentMatchId: '' })
+                    localStorage.setItem('token', res.data.token);
                     setTimeout(() => {
                         history.push("/home")
                     }, 1000)

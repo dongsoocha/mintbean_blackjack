@@ -1,4 +1,5 @@
 import React, { createContext, useEffect, useState, useContext } from 'react';
+import jwt_decode from "jwt-decode";
 
 export const UserContext = createContext();
 export const UserUpdateContext = createContext()
@@ -27,6 +28,19 @@ const UserProvider = ({ children }) => {
 
     useEffect(() => {
         // TODO: Check if HTTP cookie exists and is valid
+        if (localStorage.getItem('token')) {
+            const decoded = jwt_decode(localStorage.getItem('token').split(" ")[1]);
+            setUserState({
+                isAuth: true,
+                id: decoded.id,
+                username: decoded.username,
+                email: decoded.email,
+                balance: decoded.balance,
+                avatar: decoded.avatar,
+                cardBack: decoded.cardBack,
+                currentMatchId: ''
+            })
+        }
     }, [])
 
     return (
