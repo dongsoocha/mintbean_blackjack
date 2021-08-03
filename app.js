@@ -29,7 +29,7 @@ app.use(express.json());
 
 //var http = require("http");
 //var server = http.createServer(app);
-socketConn.socketConnect(3001);
+socketConn.socketConnect();
 
 app.use(passport.initialize());
 require('./server/config/passport')(passport);
