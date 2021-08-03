@@ -125,7 +125,7 @@ const Register = (props) => {
                     body: {}
                 }
                 axios
-                    .post("http://localhost:5000/api/users/register", {
+                    .post("/api/users/register", {
                         username: registerData.registerUsername,
                         email: registerData.registerEmail,
                         password: registerData.registerPassword1,

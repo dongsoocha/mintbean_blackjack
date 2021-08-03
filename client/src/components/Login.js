@@ -91,7 +91,7 @@ const Login = (props) => {
         e.preventDefault()
         if (logInData.signInEmail && logInData.signInPassword) {
             axios
-                .post('http://localhost:5000/api/users/login', {
+                .post('/api/users/login', {
                     email: logInData.signInEmail,
                     password: logInData.signInPassword,
                 })
