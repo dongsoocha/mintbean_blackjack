@@ -128,6 +128,7 @@ const Home = () => {
             cardBack: '',
         })
         history.push("/")
+        localStorage.removeItem('token')
     }
 
     useEffect(() => {
@@ -185,7 +186,7 @@ const Home = () => {
                     <Button variant="contained" className={classes.buttonL} onClick={joinRoom}>Enter Game Room</Button>
                 </Box>
                 <Box component="div" display="block" m={3}>
-                    <Button variant="contained" className={classes.button + " " + classes.buttonWhite} onClick={() => console.log(avatarMap[userState.avatar])}>How To Play</Button>
+                    <Button variant="contained" className={classes.button + " " + classes.buttonWhite} onClick={() => history.push("/howtoplay")}>How To Play</Button>
                 </Box>
                 <Box component="div" display="block" m={3}>
                     <Button variant="contained" className={classes.button + " " + classes.buttonGold} onClick={() => history.push("/store")}>Store</Button>

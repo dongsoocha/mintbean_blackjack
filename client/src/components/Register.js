@@ -1,7 +1,9 @@
 import React, { useState } from 'react';
 import { Typography, makeStyles, Divider, Button, TextField, Box } from "@material-ui/core";
+import { useHistory } from "react-router-dom";
 import Fade from '@material-ui/core/Fade';
 import axios from "axios";
+import { useUserContext, useUserUpdateContext } from '../contextProvider/user';
 
 const initialRegisterData = {
     registerUsername: "",
@@ -96,6 +98,8 @@ const useStyles = makeStyles((theme) => ({
 const Register = (props) => {
 
     const [registerData, setRegisterData] = useState(initialRegisterData);
+    const setUserState = useUserUpdateContext()
+    const history = useHistory();
     const classes = useStyles();
     const [responseMsg, setResponseMsg] = useState({ type: '', message: '' })
     const [errors, setErrors] = useState(initialErrors)
@@ -135,6 +139,18 @@ const Register = (props) => {
                         setRegisterData(initialRegisterData)
                         setResponseMsg({ type: 'success', message: 'Registration successful!' })
                         setErrors(initialErrors)
+                        setTimeout(() => {
+                            axios
+                                .post('http://localhost:5000/api/users/login', {
+                                    email: registerData.registerEmail,
+                                    password: registerData.registerPassword1,
+                                })
+                                .then((res) => {
+                                    setUserState({ ...res.data.payload, isAuth: true, currentMatchId: '' })
+                                    localStorage.setItem('token', res.data.token);
+                                    history.push("/home")
+                                })
+                        }, 1000)
                     })
                     .catch((err) => {
                         console.log(err.response.data)
@@ -257,9 +273,9 @@ const Register = (props) => {
                     <Typography varaint="body2" className={classes.gold}>
                         Already have an account? <strong className={classes.signUp} onClick={() => props.setPage("login")}>Sign in!</strong>
                     </Typography>
-                    <Typography varaint="body2" className={classes.gold}>
+                    {/*<Typography varaint="body2" className={classes.gold}>
                         Don't want to register? <strong className={classes.signUp} onClick={() => props.setPage("default")}>Continue as guest.</strong>
-                    </Typography>
+                        </Typography>*/}
                 </form>
             </div>
         </Fade>

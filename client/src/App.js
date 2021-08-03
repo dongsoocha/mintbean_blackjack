@@ -9,6 +9,7 @@ import Home from "./pages/Home";
 import Chat from "./components/Chat";
 import Table from "./pages/Table";
 import Store from "./pages/Store";
+import HowToPlay from "./pages/HowToPlay";
 
 import { UserProvider } from "./contextProvider/user";
 
@@ -25,6 +26,7 @@ function App() {
             <BrowserRouter>
               <Route path="/" exact component={LandingPage} />
               <Route path="/test" component={Test} />
+              <Route path="/howtoplay" component={HowToPlay} />
               <Route path="/home" exact component={Home} />
               <Route path="/table" exact component={Table} />
               <Route path="/chat" component={Chat} />
