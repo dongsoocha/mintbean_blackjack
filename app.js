@@ -18,11 +18,15 @@ const port = process.env.PORT || 5000;
         res.sendFile(path.join(__dirname, 'client/build/index.html'));
     })
 // }
-
-mongoose
-    .connect(db, { useNewUrlParser: true })
-    .then(() => console.log("Connected to MongoDB successfully"))
-    .catch(err => console.log('error'));
+let server =
+  process.env.NODE_ENV === "production"
+    ? "http //mintjack.herokuapp.com/"
+    : "3001"
+    
+    mongoose
+        .connect(db, { useNewUrlParser: true })
+        .then(() => console.log("Connected to MongoDB successfully"))
+        .catch((err) => console.log("error"));
 
 app.use(express.urlencoded({ extended: false }));
 app.use(cors());
@@ -31,7 +35,7 @@ app.use(express.json());
 
 //var http = require("http");
 //var server = http.createServer(app);
-socketConn.socketConnect(3001);
+socketConn.socketConnect(server);
 
 app.use(passport.initialize());
 require('./server/config/passport')(passport);
