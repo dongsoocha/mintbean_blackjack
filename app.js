@@ -35,7 +35,7 @@ var http = require("http");
 // require("./server/config/passport")(passport);
 // app.use("/api/users", users);
 
-// const port = process.env.PORT || 5000;
+const port = process.env.PORT || 5000;
 
 // socketConn.socketConnect(port);
 
