@@ -219,23 +219,23 @@ const Table = () => {
             console.log(game)
             setGameState(game);
         });
-        socket.on('update-timer', () => {
-            //console.log("Updating timer")
-            console.log("ccc")
-            console.log(gameState)
-            startDate.current = Date.now()
-        });
-        socket.on('update-game-state-and-timer', (game) => {
-            //console.log("Updating timer")
-            console.log(game)
-            console.log(gameState)
-            startDate.current = Date.now()
-            setGameState(game);
-        });
-        socket.on(`force-player-to-stand-${userState.username}`, () => {
-            console.log(userState.username)
-            stand()
-        });
+        // socket.on('update-timer', () => {
+        //     //console.log("Updating timer")
+        //     console.log("ccc")
+        //     console.log(gameState)
+        //     startDate.current = Date.now()
+        // });
+        // socket.on('update-game-state-and-timer', (game) => {
+        //     //console.log("Updating timer")
+        //     console.log(game)
+        //     console.log(gameState)
+        //     startDate.current = Date.now()
+        //     setGameState(game);
+        // });
+        // socket.on(`force-player-to-stand-${userState.username}`, () => {
+        //     console.log(userState.username)
+        //     stand()
+        // });
         return () => {
             socket.emit('leave-room', {
                 player: {
