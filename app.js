@@ -1,19 +1,19 @@
 const mongoose = require("mongoose");
 const express = require("express");
 const app = express();
-const db = require('./config/keys.js').mongoURI;
-const users = require('./routes/api/users');
+const db = require('./server/config/keys.js').mongoURI;
+const users = require('./server/routes/api/users');
 const passport = require('passport');
 const cors = require("cors");
 const cookieParser = require('cookie-parser');
-const socketConn = require('./socket');
+const socketConn = require('./server/socket');
 const path = require('path');
 
 // if (process.env.NODE_ENV === 'production') {
-    app.use(express.static(path.join(__dirname, '..', 'client/build')));
+    app.use(express.static('client/build'));
 
     app.get('/', (req, res) => {
-        res.sendFile(path.join(__dirname, '..', 'client/build/index.html'));
+        res.sendFile(path.join(__dirname, 'client/build/index.html'));
     })
 // }
 
@@ -32,7 +32,7 @@ app.use(express.json());
 socketConn.socketConnect(3001);
 
 app.use(passport.initialize());
-require('./config/passport')(passport);
+require('./server/config/passport')(passport);
 app.use("/api/users", users);
 
 
