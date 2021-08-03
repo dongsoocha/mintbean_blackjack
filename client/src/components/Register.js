@@ -141,7 +141,7 @@ const Register = (props) => {
                         setErrors(initialErrors)
                         setTimeout(() => {
                             axios
-                                .post('http://localhost:5000/api/users/login', {
+                                .post('/api/users/login', {
                                     email: registerData.registerEmail,
                                     password: registerData.registerPassword1,
                                 })
